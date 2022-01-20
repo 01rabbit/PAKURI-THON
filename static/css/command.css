@@ -1,0 +1,38 @@
+#dropArea {
+    color: white;
+    font-size: 20px;
+    font-family: arial;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    height: 330px;
+    text-align: center;
+    border: 4px solid #917c50;
+    background-color: #16160e;
+    transition: all 0.25s cubic-bezier(0.21, 0.51, 0.51, 1);
+}
+
+#dropArea p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#dropArea.dragover,
+#dropArea:hover {
+    border: 4px solid #9a1117;
+    background: #917c50;
+    color: #9a1117;
+}
+
+#uploadFile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}

@@ -1,0 +1,150 @@
+body {
+    background: #16160e;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container1 {
+    height: 100px;
+    width: 160px;
+    margin: auto;
+    position: fixed;
+    bottom: 5px;
+    right: -40px;
+    cursor: pointer;
+    z-index: 25;
+}
+
+.menu1 {
+    /* z-index: -1; */
+    transform: scale(0.9);
+    position: fixed;
+    bottom: -20px;
+    right: 20px;
+}
+
+.container1 .toggle1 {
+    height: 0;
+    width: 95px;
+    border-bottom: 45px solid #9a1117;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    position: absolute;
+    top: 0;
+    z-index: 30;
+}
+
+.container1 .toggle1:before {
+    content: "";
+    height: 0;
+    width: 95px;
+    border-top: 45px solid #9a1117;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    position: absolute;
+    top: 45px;
+    left: -25px;
+}
+
+#add1 {
+    font-size: 100px;
+    color: #150c15;
+    position: relative;
+    top: -5px;
+    right: 27px;
+    transition: 0.3s;
+}
+
+#add1:hover {
+    color: #917c50;
+}
+
+.item {
+    height: 0;
+    width: 95px;
+    border-bottom: 45px solid #917c50;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    position: absolute;
+    top: -130px;
+    right: 10px;
+    transition: 0.4s;
+}
+
+.item:before {
+    content: "";
+    height: 0;
+    width: 95px;
+    border-top: 45px solid #917c50;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    position: absolute;
+    top: 45px;
+    left: -25px;
+}
+
+.item a>.bx {
+    color: #150c15;
+    font-size: 60px;
+    transition: 0.3s;
+}
+
+.item a>.bx:hover {
+    /* color: #11101d; */
+    color: #9a1117;
+    transform: scale(1.2);
+}
+
+.menu1 .item a {
+    position: relative;
+    top: 13px;
+    right: 8px;
+}
+
+.one {
+    transform: translate(5px, -100px);
+    /*上角*/
+}
+
+.two {
+    /* transform: translate(120px, 80px); */
+    /*右下角*/
+    transform: translateX(-155px);
+}
+
+.three {
+    /* transform: translate(120px, -80px); */
+    /*右上角*/
+    transform: translateX(-315px);
+}
+
+.four {
+    /* transform: translateY(155px); */
+    /*下角*/
+    transform: translate(-235px, -50px);
+}
+
+.five {
+    /* transform: translate(-75px, 55px); */
+    /*左下角*/
+    transform: translate(-155px, -100px);
+}
+
+.six {
+    transform: translate(-75px, -50px);
+    /*左上角*/
+}
+
+.seven {
+    transform: translate(-75px, -150px);
+    /*Docker*/
+}
+
+.eight {
+    transform: translate(5px, -200px);
+    /*Terminal*/
+}
+
+.fit-images {
+    width: 100%;
+}
