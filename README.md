@@ -109,6 +109,17 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 ---
 
+## Install
+
+### WebSSH
+
+``` shell
+cd PAKURI-THON/docker
+git clone https://github.com/huashengdun/webssh.git webssh
+cd webssh
+docker-compose up -d
+```
+
 ## Usage
 
 ```shell
