@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/pakuri-logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <!--Side Bar-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='boxicons/css/boxicons.min.css') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+
+    <title>PAKURI-THON</title>
+    <!--<title>Python-Test</title>-->
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="sidebar close">
+        <div class="logo-details">
+            <!--<i class='bx bxl-python'></i>-->
+            <img src="{{ url_for('static', filename='images/pakuri-logo.png') }}" alt="">
+            <!--<span class="logo_name">Python-Test</span>-->
+            <span class="logo_name">PAKURI-THON</span>
+        </div>
+        <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('index') }}">
+                        <i class='bx bx-home' ></i>
+                        <span class="link_name">Home</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="{{ url_for('index') }}">Home</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="{{ url_for('hostlist') }}">
+                        <i class='bx bx-target-lock' ></i>
+                        <span class="link_name">Targets</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="{{ url_for('hostlist') }}">Targets</a></li>
+                        <li><a href="{{ url_for('hostlist') }}">Host List</a></li>
+                        <li><a href="{{ url_for('scan_menu') }}">Scan</a></li>
+                        <li><a href="{{ url_for('fileimport') }}">Import</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="{{ url_for('tools') }}">
+                            <i class='bx bx-cog' ></i>
+                            <span class="link_name">Tools</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow' ></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="{{ url_for('tools') }}">Tools</a></li>
+                        <li><a href="{{ url_for('empire_home') }}">PowerShell Empire</a></li>
+                        <li><a href="#">Other</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ url_for('terminal') }}">
+                        <i class='bx bx-terminal'></i>
+                        <span class="link_name">Terminal</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="{{ url_for('terminal') }}">Terminal</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="http://{{ myip }}:8080/apps/spreed/" target="_blank" rel="noopener noreferrer">
+                        <i class='bx bxs-chat' ></i>
+                        <span class="link_name">Chat</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="http://{{ myip }}:8080/apps/spreed/" target="_blank" rel="noopener noreferrer">Chat</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="http://{{ myip }}:8080/apps/files/" target="_blank" rel="noopener noreferrer">
+                        <i class='bx bx-cloud-download' ></i>
+                        <span class="link_name">Storage</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="http://{{ myip }}:8080/apps/files/" target="_blank" rel="noopener noreferrer">Storage</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ url_for('task') }}">
+                        <i class='bx bx-list-ul'></i>
+                        <span class="link_name">Task View</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="{{ url_for('task') }}">Task View</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ url_for('docker') }}">
+                        <i class='bx bxl-docker' ></i>
+                        <span class="link_name">Docker</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="{{ url_for('docker') }}">Docker</a></li>
+                    </ul>
+                </li>
+                <li>
+
+                <div class="profile-details">
+                    <div class="profile-content">
+                    <!--<img src="images/profile.jpg" alt="profileImg">-->
+                </div>
+                <div class="name-job">
+                    <div class="profile_name">Mr.Rabbit</div>
+                    <div class="job">Toolmaker</div>
+                </div>
+                <a href="https://github.com/01rabbit">
+                    <i class='bx bxl-github'></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-menu' ></i>
+            <span class="text">PAKURI-THON</span>
+            <!--<span class="text">Python-Test</span>-->
+        </div>
+            {% block content %}{% endblock %}
+
+            <footer class="footer">
+                <div class="container">
+                    <p class="text-muted_text-center">Copyright &copy; 2022 PAKURI-THON.</p>
+                    <!--<p class="text-muted_text-center">Copyright &copy; 2021 Python-Test.</p>-->
+                </div>
+            </footer>
+                {% block foot %}{% endblock %}
+    </section>
+    <script src="{{ url_for('static',filename='js/script.js') }}"></script>
+    
+    <!--HoneyComb Menu-->
+    <div class="container1">
+        <div class="toggle1" id="toggle">
+            <i class='bx bx-plus' id="add1"></i>
+        </div>
+    </div>
+    <div class="menu1" id="menu1">
+        <div class="item">
+            <a href="{{ url_for('index') }}"><i class='bx bx-home' ></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('task') }}"><i class='bx bx-list-ul'></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('tools') }}"><i class='bx bx-cog' ></i></a>
+        </div>
+        <div class="item">
+            <a href="http://{{ myip }}:8080/apps/spreed/" target="_blank" rel="noopener noreferrer">
+                <i class='bx bxs-chat' ></i></a>
+        </div>
+        <div class="item">
+            <a href="http://{{ myip }}:8080/apps/files/" target="_blank" rel="noopener noreferrer">
+                <i class='bx bx-cloud-download' ></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('hostlist') }}"><i class='bx bx-target-lock' ></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('docker') }}"><i class='bx bxl-docker' ></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('terminal') }}"><i class='bx bx-terminal'></i></a>
+        </div>
+    </div>
+    <script src="{{ url_for('static',filename='js/menu.js') }}"></script>
+
+</body>
+
+</html>

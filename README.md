@@ -109,6 +109,78 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 ---
 
+## Install
+
+1. Download the Github repository:
+
+    ``` shell
+    git clone https://github.com/01rabbit/PAKURI-THON.git
+    ```
+
+2. PAKURI-THON uses Docker. If you do not have it installed, follow the steps below. If you have already installed it, go to 4.
+
+    1. Add the GPG key from the official Docker repository to the system.
+
+        ```shell
+        curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+        ```
+
+    2. Add the Docker repository to the APT source. (kali base debian)
+
+        ```shell
+        echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' > /etc/apt/sources.list.d/docker.list
+        ```
+
+    3. Update the repository and install docker-ce and docker-compose.
+
+        ```shell
+        apt update
+        apt install docker-ce -y
+        apt install docker-compose -y
+        ```
+
+    4. WebSSH
+
+        ``` shell
+        cd PAKURI-THON/docker
+        git clone https://github.com/huashengdun/webssh.git webssh
+        cd webssh
+        docker-compose up -d
+        ```
+
+    5. NextCloud
+
+        ``` shell
+        cd PAKURI-THON/docker/NextCloud-Docker
+        docker-compose up -d
+        ```
+
+3. Create a `service.ini` file under `PAKURI-THON/`.  
+
+    service.ini  
+
+    ``` ini
+    [postgresql]
+    user = YOUR_POSTGRESQL_USERNAME
+    password = YOUR_POSTGRESQL_PASSWORD
+    host = localhost
+    database = YOUR_DBNAME
+    [nextcloud]
+    server = http://YOUR_PAKURI-THON_IP:8080
+    username = pitto
+    password = SET_YOUR_PASSWORD
+    inforoom = Information
+    [webssh]
+    username = SET_YOUR_USERNAME
+    password = SET_YOUR_PASSWORD
+    [empire]
+    username = empireadmin(empire default)
+    password = password123(empire default)
+    server = https://YOUR_PAKURI-THON_IP:1337
+    listener = pakuri
+    port = 8088
+    ```
+
 ## Usage
 
 ```shell

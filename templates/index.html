@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <img class="fit-images" src="{{ url_for('static', filename='images/pakuri3-banner.png') }}" alt="">
+</div>
+<hr>
+    <div class="grid_hostlist">
+        <a class="item1" href="{{ url_for('hostlist') }}" role="button">
+            <img src="{{ url_for('static',filename='images/target.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Targets</h3>
+        </a>
+        <a class="item1" href="{{ url_for('tools') }}" role="button">
+            <img src="{{ url_for('static',filename='images/setting.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Tools</h3>
+        </a>
+        <a class="item1" href="{{ url_for('terminal') }}" role="button">
+            <img src="{{ url_for('static',filename='images/cmd.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Terminal</h3>
+        </a>
+        <a class="item1" href="http://{{ myip }}:8080/apps/spreed/" target="_blank" rel="noopener noreferrer" role="button">
+            <img src="{{ url_for('static',filename='images/chat.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Chat</h3>
+        </a>
+        <a class="item1" href="http://{{ myip }}:8080/apps/files/" target="_blank" rel="noopener noreferrer" role="button">
+            <img src="{{ url_for('static',filename='images/storage.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Storage</h3>
+        </a>
+        <a class="item1" href="{{ url_for('task') }}" role="button">
+            <img src="{{ url_for('static',filename='images/task.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Task View</h3>
+        </a>
+        <a class="item1" href="{{ url_for('docker') }}" role="button">
+            <img src="{{ url_for('static',filename='images/docker.png') }}" style="display: block; margin: auto;" alt="">
+            <h3 style="text-align:center">Docker</h3>
+        </a>
+    </div>
+<hr>
+
+{% endblock %}

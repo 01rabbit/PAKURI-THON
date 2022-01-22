@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/command.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('hostlist') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+<hr>
+    <h2>Import XML File</h2>
+    <!-- ドラッグ&ドロップエリア 及び通常のinput[type=file]-->
+    <form method="post" enctype="multipart/form-data">
+        <div id="upFileWrap">
+            <div id="dropArea">
+                <p>
+                    <i class='bx bx-file'></i><span class="areatext">Drag & Drop or click here</span><br>
+                    <span class="areatext">ファイル名:<i id="fileName">Nmap XML</i></span>
+                </p>
+                <input type="file" accept="text/xml" name="uploadFile" id="uploadFile">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="ostype btn btn-success"><i class='bx bx-import'></i><br>Import</button>
+    </form>
+<hr>
+{% endblock %}
+
+{% block foot %}
+    <script src="{{ url_for('static',filename='js/command.js') }}"></script>
+{% endblock %}
