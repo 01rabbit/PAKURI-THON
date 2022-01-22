@@ -111,26 +111,13 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 ## Install
 
-1. Update your apt and install git:
-
-    ```shell
-    apt update
-    apt install git
-    ```
-
-2. Download the Github repository:
+1. Download the Github repository:
 
     ``` shell
     git clone https://github.com/01rabbit/PAKURI-THON.git
     ```
 
-3. Go to docker:
-
-    ``` shell
-    cd PAKURI-THON/docker
-    ```
-
-4. PAKURI-THON uses Docker. If you do not have it installed, follow the steps below. If you have already installed it, go to 4.
+2. PAKURI-THON uses Docker. If you do not have it installed, follow the steps below. If you have already installed it, go to 4.
 
     1. Add the GPG key from the official Docker repository to the system.
 
@@ -168,7 +155,9 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
         docker-compose up -d
         ```
 
-5. Create service.ini file.
+3. Create a `service.ini` file under `PAKURI-THON/`.  
+
+    service.ini  
 
     ``` ini
     [postgresql]
