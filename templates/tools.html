@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+    </div>
+    <hr>
+    <h2>Tools</h2>
+    <br>
+    <div class="grid_hostlist">
+        <a class="item1" href="{{ url_for('empire_home') }}" role="button">
+            <table>
+                <tr>
+                    <td>
+                        <img src="{{ url_for('static',filename='images/powershell-empire-logo.svg') }}" style="display: block; margin: auto;" >
+                    </td>
+                    <td>
+                        <h2 style="text-align:left">PowerShell Empire</h2>
+                        <h5 style="text-align:left">Use PowerShell Empire to simulate attaks, such as APT19, APT33, and APT41.</h5>
+                    </td>
+                </tr>
+            </table>
+        </a>
+    </div>
+<hr>
+
+{% endblock %}

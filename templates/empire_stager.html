@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('empire_home') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    <div class="container">
+        <table>
+            <td>
+                <img src="{{ url_for('static',filename='images/powershell-empire-logo.svg') }}" style="display: block; margin: auto;" width="256" height="256" alt="">
+            </td>
+            <td>
+                <div class="container">
+                    <p>
+                        <h2>PowerShell Empire</h2>
+                        <h5>Use PowerShell Empire to simulate attaks, such as APT19, APT33, and APT41.</h5>
+                        <hr>
+                        Listener Name: {{ listener }}<br>
+                        Stager : {{ stagers }}<br>
+                    </p>
+                </div>
+            </td>
+        </table>
+    </div>
+    <br>
+    <textarea id="generateCommand" rows="10" cols="100" class="form-control" readonly>{{ output }}</textarea>
+    <p>Output File Name(Default) : <input type="text" class="bg-dark border-dark text-white" value={{ outfile }} readonly></p>
+    <h4>Information : </h4>
+    <p>Once you have copied the payload to the clipboard by pressing Copy, create a Stager file using the default file name as a reference.<p>
+    <div class="container">
+        <button class="ostype btn btn-success" onclick="copyToClipboard()" ><i class='bx bx-copy-alt' ></i><br>Copy</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('empire_home') }}'"><i class='bx bx-eraser'></i><br>Clear</button>
+    </div>
+    <hr>
+{% endblock %}
+
+{% block foot %}
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("generateCommand");
+        copyText.select();
+        document.execCommand("copy");
+    }
+    $(function(){
+        $('#stager').change(function(){
+            var stagerLabel = $(this).val().split(',')[0];
+            $('#setStager').val(stagerLabel);
+            var table = $('#detail-table').DataTable();
+            table.search('').columns().search('').draw();
+            table.column( 0 ).search( stagerLabel ).draw();
+        });
+    });
+</script>
+    
+{% endblock %}

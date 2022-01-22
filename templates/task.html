@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            // デフォルトの設定を変更
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+            });
+            $("#detail-table").DataTable({
+                // 横スクロールバーを有効にする (scrollXはtrueかfalseで有効無効を切り替えます)
+                scrollX: false,
+                // 縦スクロールバーを有効にする (scrollYは200, "200px"など「最大の高さ」を指定します)
+                scrollY: 410,
+                lengthChange: false,
+                order: [[ 0, "desc" ]],
+                pagingType: "numbers",
+                searching: false,
+                //displayLength: 100,
+                aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                iDisplayLength: -1
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+    </div>
+    <hr>
+    <h2>Task View</h2>
+    <br>
+    <table id="detail-table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>command</th>
+                <th>status</th>
+                <th>timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job[0] }}</td>
+                <td>{{ job[1] }}</td>
+                <td>{{ job[2] }}</td>
+                <td>{{ job[3] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<hr>
+
+{% endblock %}
