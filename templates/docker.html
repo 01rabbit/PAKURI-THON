@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+    </div>
+    <hr>
+    <h2>Docker Control</h2>
+    <br>
+    <div class="grid_hostlist">
+        <a class="item1" href="{{ url_for('docker_nextcloud') }}" role="button">
+            <img src="{{ url_for('static',filename='images/Nextcloud.png') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+            <h3 style="text-align:center">Nextcloud</h3>
+            {% if nextcloud == "2" %}
+                <h4 style="text-align:center; color:green">Active</h4>
+            {% else %}
+                <h4 style="text-align:center; color:red">Down</h4>
+            {% endif %}
+        </a>
+        <a class="item1" href="{{ url_for('docker_webssh') }}" role="button">
+            <img src="{{ url_for('static',filename='images/webssh.png') }}" style="display: block; margin: auto;"  width="128" height="128" alt="">
+            <h3 style="text-align:center">WebSSH</h3>
+            {% if webssh =="1" %}
+                <h4 style="text-align:center; color:green">Active</h4>
+            {% else %}
+                <h4 style="text-align:center; color:red">Down</h4>
+            {% endif %}
+        </a>
+    </div>
+<hr>
+
+{% endblock %}

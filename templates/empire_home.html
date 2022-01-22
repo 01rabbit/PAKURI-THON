@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/command.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        $("#detail-table").DataTable({
+            scrollX: false,
+            //scrollY: 300,
+            lengthChange: false,
+            pagingType: "numbers",
+            //searching: false,
+            displayLength: 10,
+            paging: false,
+            info: false
+        });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('tools') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    <div class="container">
+        <table>
+            <td>
+                <img src="{{ url_for('static',filename='images/powershell-empire-logo.svg') }}" style="display: block; margin: auto;" width="256" height="256" alt="">
+            </td>
+            <td>
+                <div class="container">
+                    <p>
+                        <h2>PowerShell Empire</h2>
+                        <h5>Use PowerShell Empire to simulate attaks, such as APT19, APT33, and APT41.</h5>
+                        <hr>
+                        <table>
+                            <td>
+                                {% if  listeners[0] != "" %}
+                                Listener Name: {{ listeners[0] }}<br>
+                                Module : {{ listeners[1]}}<br>
+                                Host : {{ listeners[2]}}<br>
+                                Currently Active Agents : {{ i }}<br>
+                                {% else %}
+                                Listener Unset or Empire is not running.
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="ostype btn btn-success" onclick="location.href='{{ url_for('empire_agent') }}'"><i class='bx bxs-user-circle'></i><br>Agents</button>
+                            </td>
+                        </table>
+                    </p>
+                </div>
+            </td>
+        </table>
+    </div>
+    <br>
+    <div class="container">
+        <h3>Generate Stager</h3>
+        <select id="stager" class="bg-dark border-dark text-white">
+            <option disabled selected>Select Stager</option>
+                {% for stager in stagers %}
+                <option value="{{ stager[0] }}">{{ stager[0] }}</option>
+                {% endfor %}
+            </optgroup>
+        </select>
+        <table id="detail-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Discription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stager in stagers %}
+                <tr>
+                    <td>{{ stager[0] }}</td>
+                    <td>{{ stager[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    <div class="container">
+                        <form action="/empire_stager" method="POST">
+                            <input type="text" id="setListener" name="setListener" value={{ listeners[0] }} hidden />
+                            <input type="text" id="setStager" name="setStager" value="" hidden />
+                            <button type="submit" id="sendCommand" class="ostype btn btn-primary"><i class='bx bxs-edit'></i><br>Generate</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div class="container">
+                        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('empire_home') }}'"><i class='bx bx-eraser'></i><br>Clear</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+{% endblock %}
+
+{% block foot %}
+
+<script>
+    $(function(){
+        $('#stager').change(function(){
+            var stagerLabel = $(this).val().split(',')[0];
+            $('#setStager').val(stagerLabel);
+            var table = $('#detail-table').DataTable();
+            table.search('').columns().search('').draw();
+            table.column( 0 ).search( stagerLabel ).draw();
+        });
+    });
+</script>
+    
+{% endblock %}

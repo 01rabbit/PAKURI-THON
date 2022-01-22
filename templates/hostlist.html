@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            // デフォルトの設定を変更
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        $("#detail-table").DataTable({
+            // 横スクロールバーを有効にする (scrollXはtrueかfalseで有効無効を切り替えます)
+            scrollX: false,
+            // 縦スクロールバーを有効にする (scrollYは200, "200px"など「最大の高さ」を指定します)
+            scrollY: 410,
+            lengthChange: false,
+            pagingType: "numbers",
+            searching: false,
+            //displayLength: 100,
+            aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            iDisplayLength: -1
+        });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('scan_menu', ip="") }}'"><i class='bx bxs-binoculars'></i><br>Recon</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('fileimport') }}'"><i class='bx bx-import'></i><br>Import</button>
+    </div>
+<hr>
+<h2>Host List</h2>
+    <div class="grid_hostlist">
+        {% for host in hosts %}
+        <a class="item1" href="{{ url_for('hostdetail',id=host[0]) }}" role="button">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            {% if host[6] == "Windows" %}
+                                <img src="{{ url_for('static',filename='images/windows.png') }}" alt="">
+                            {% elif host[6] == "Linux" %}
+                                <img src="{{ url_for('static',filename='images/linux.png') }}" alt="">
+                            {% elif host[6] == "MacOS" %}
+                                <img src="{{ url_for('static',filename='images/apple.png') }}" alt="">
+                            {% else %}
+                                <img src="{{ url_for('static',filename='images/other.png') }}" alt="">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <p>
+                                {{ host[1] }}<br>
+                                {{ host[3] }}<br>
+                                {{ host[7] }}
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </a>
+        {% endfor %}
+    </div>
+<hr>
+<h2>Service List</h2>
+    <table id="detail-table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ip</th>
+                <th>port</th>
+                <th>Service</th>
+                <th>Version</th>
+                <th>Vuln</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vuln in vlist %}
+            <tr>
+                <td>{{ vuln[0] }}</td>
+                <td>{{ vuln[1] }} {{ vuln[2] }}</td>
+                <td>{{ vuln[3] }}</td>
+                <td>{{ vuln[4] }} {{ vuln[5] }}</td>
+                <td>{{ vuln[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

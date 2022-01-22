@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            // デフォルトの設定を変更
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        $("#detail-table").DataTable({
+            // 横スクロールバーを有効にする (scrollXはtrueかfalseで有効無効を切り替えます)
+            scrollX: false,
+            // 縦スクロールバーを有効にする (scrollYは200, "200px"など「最大の高さ」を指定します)
+            //scrollY: 410,
+            lengthChange: false,
+            pagingType: "numbers",
+            searching: false,
+            //displayLength: 100,
+            aLengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            iDisplayLength: -1
+        });
+        });
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('hostlist') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('fileimport') }}'"><i class='bx bx-import'></i><br>Import</button>
+    </div>
+    <hr>
+    <h2>Port detail</h2>
+    <table  class="display" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <h4>Protocol : {{ ports[2] }}</h4>
+                    <h4>Port : {{ ports[3] }}</h4>
+                    <h4>State : {{ ports[4] }}</h4>
+                </td>
+                <td>
+                    <h4>Service : {{ ports[5] }}</h4>
+                    <h4>Version : {{ ports[6] }} {{ ports[7] }}</h4>
+                    <h4>Extra : {{ ports[8] }}</h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h2>Vulnerability</h2>
+    <table id="detail-table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>script_id</th>
+                <th>output</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vuln in vulns %}
+            <tr>
+                <td>{{ vuln[2] }}</td>
+                <td>{{ vuln[3] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

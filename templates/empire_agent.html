@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/command.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        $("#detail-table").DataTable({
+            scrollX: false,
+            //scrollY: 300,
+            lengthChange: false,
+            pagingType: "numbers",
+            searching: false,
+            displayLength: 10,
+            paging: false,
+            info: false
+        });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('empire_home') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    <div class="container">
+        <table>
+            <td>
+                <img src="{{ url_for('static',filename='images/powershell-empire-logo.svg') }}" style="display: block; margin: auto;" width="256" height="256" alt="">
+            </td>
+            <td>
+                <div class="container">
+                    <p>
+                        <h2>PowerShell Empire</h2>
+                        <h5>Use PowerShell Empire to simulate attaks, such as APT19, APT33, and APT41.</h5>
+                        <hr>
+                        Currently Active Agents : {{ i }}<br>
+                    </p>
+                </div>
+            </td>
+        </table>
+    </div>
+    <br>
+    <div class="container">
+        <table id="detail-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>IP</th>
+                    <th>Username</th>
+                    <th>Process</th>
+                    <th>PID</th>
+                    <th>OS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agent in agents %}
+                <tr>
+                    <td>{{ agent[0] }}</td>
+                    <td>{{ agent[1] }}</td>
+                    <td>{{ agent[3] }}</td>
+                    <td>{{ agent[4] }}</td>
+                    <td>{{ agent[5] }}</td>
+                    <td>{{ agent[6] }}</td>
+                    <td>{{ agent[9] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+{% endblock %}

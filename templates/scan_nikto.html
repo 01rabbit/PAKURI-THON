@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/command.css') }}">
+    <script src="{{ url_for('static',filename='DataTables/datatables.min.js') }}"></script>
+    <script>
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        $("#detail-table").DataTable({
+            scrollX: false,
+            //scrollY: 300,
+            lengthChange: false,
+            pagingType: "numbers",
+            //searching: false,
+            displayLength: 10,
+            paging: false,
+            info: false
+        });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('scan_menu') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    <h2>Scanning -Nikto-</h2>
+    <h3>Recipe</h3>
+    <P>
+        Target: 
+        <select id="hosts" class="bg-dark border-dark text-white">
+            {% if ip != "" %}
+                <option value={{ ip }}>{{ ip }}</option>
+            {% else %}
+                <option disabled selected>Select Target</option>
+            {% endif %}
+                <optgroup label="Other Hosts">
+                    {% for host in hosts %}
+                    <option value="{{ host[0] }}">{{ host[0] }}</option>
+                    {% endfor %}
+                </optgroup>
+        </select>
+        Scan Profile: 
+        <select id="scanOption" class="bg-dark border-dark text-white">
+            <option disabled selected value="0">Choice Scan Profile</option>
+            <optgroup label="Nikto">
+                {% for nikto in scan_nikto %}
+                    <option value="{{ nikto[0] }},{{ nikto[1] }},{{ nikto[2] }},{{ nikto[3] }}">{{ nikto[1] }}</option>
+                {% endfor %}
+            </optgroup>
+        </select>
+    </p>
+    <div class="container">
+        <table id="detail-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Discription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for command in commands %}
+                <tr>
+                    <td>{{ command[0] }}</td>
+                    <td>{{ command[1] }}</td>
+                    <td>{{ command[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <h5>Command:</h5>
+    <input type="text" id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="width:80%;" placeholder="Your Command of choice" value=""><br><br>
+    <div class="form">
+        <table>
+            <tr>
+                <td>
+                    <form action="/scan_nikto" method="POST">
+                        <input type="hidden" id="setFilename" name="setFilename" value="" />
+                        <input type="text" id="setCommand" name="setCommand" value="" hidden>
+                        <button type="submit" id="sendCommand" class="ostype btn btn-primary"><i class='bx bx-task'></i><br>Task</button>
+                    </form>
+                </td>
+                <td>
+                    <button class="ostype btn btn-success" onclick="copyToClipboard()" ><i class='bx bx-copy-alt' ></i><br>Copy</button>
+                </td>
+                <td>
+                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'"><i class='bx bx-terminal'></i><br>Terminal</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+{% endblock %}
+{% block foot %}
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("command");
+        copyText.select();
+        document.execCommand("copy");
+    }
+    $(function(){
+        $('#hosts').change(function(){
+            var val = $(this).val();
+            $('#setCommand').val(val);
+            $('#scanOption').val("0");
+            $('#copyCommand').val(val);
+            $('#setFilename').val(val);
+        });
+        $('#scanOption').change(function(){
+            var commandID = $(this).val().split(',')[0];
+            var commandName = $('#scanOption').val().split(',')[1];
+            var commandValue = $('#scanOption').val().split(',')[2];
+            var scanType = $('#scanOption').val().split(',')[3];
+            var commandLabel = $('#scanOption option:selected').text();
+            var IPaddr = $('#hosts').val();
+            var dt = new Date();
+            var dateTime = dt.getFullYear() + ("0" + (dt.getMonth() + 1)).slice(-2) + ("0" + dt.getDate()).slice(-2) + ("0" + dt.getHours()).slice(-2) + ("0" + dt.getMinutes()).slice(-2) + ("0" + dt.getSeconds()).slice(-2);
+            var filename = commandName + "_" + IPaddr + "_" + dateTime;
+            $('#setCommand').val("");
+            $('#copyCommand').val("");
+            $('#setCommand').val(commandValue + " " + IPaddr + " -o tmp/" + filename + " -Format xml");
+            $('#copyCommand').val(commandValue + " " + IPaddr + " -o tmp/" + filename + " -Format xml");
+            $('#setFilename').val(filename);
+            var table = $('#detail-table').DataTable();
+            table.search('').columns().search('').draw();
+            table.column( 0 ).search( commandID ).draw();
+            table.column( 1 ).search( commandLabel ).draw();
+        });
+    });
+</script>
+
+{% endblock %}

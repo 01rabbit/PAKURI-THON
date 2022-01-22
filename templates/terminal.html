@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('hostlist') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    {% if console_flg == "1" %}
+        <h2>Terminal</h2>
+        <iframe id="iframe-console" src="http://{{ myip }}:8888/?hostname={{ myip }}&username={{ username }}&password={{ password }}&command=clear" ></iframe>
+    {% else %}
+        <h2><i class="bx bx-error"></i> Terminal is not running</h2>
+        <p>Please run <code>sudo docker-compose up -d</code> to start terminal</p>
+    {% endif %}
+    <hr>
+    <h2>Scanning -Menu-</h2>
+    <div class="container">
+        <div class="grid_hostlist">
+            <a class="item1" href="{{ url_for('scan_nmap') }}" role="button">
+                <img src="{{ url_for('static',filename='images/nmap-logo.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+                <h3 style="text-align:center">Nmap</h3>
+            </a>
+            <a class="item1" href="{{ url_for('scan_nikto') }}" role="button">
+                <img src="{{ url_for('static',filename='images/nikto-logo.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+                <h3 style="text-align:center">Nikto</h3>
+            </a>
+        </div>
+    </div>
+{% endblock %}
