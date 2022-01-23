@@ -14,7 +14,7 @@ def insert_db(sql,arg):
         conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
-        print("insert_db :"+error)
+        # print("insert_db :"+error)
         pass
     finally:
         if conn is not None:
@@ -72,4 +72,3 @@ def get_AllValues(sql,arg):
         if conn is not None:
             conn.close()
     return value
-

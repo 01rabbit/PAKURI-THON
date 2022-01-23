@@ -1,7 +1,6 @@
 import datetime
 import os
 import subprocess
-import json
 from subprocess import PIPE
 import db_controller as db
 import JobController as jc
@@ -41,7 +40,7 @@ def fileread(filename):
         return f.read()
 
 
-def docker_action(command):
+def process_action(command):
     result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE)
     return(result.stdout.decode('utf-8').split('\n')[0])
 
@@ -65,8 +64,8 @@ def fileimport():
             # t_job_listにXMLファイルを読み込むJobを登録する
             command = "python xmlparser.py " + \
                 os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE)
-            # jc.Set_myjob(command)
+            process_action(command)
+            jc.Set_myjob(command)
             return redirect(url_for('index'))
     return render_template('import.html')
 
@@ -156,42 +155,42 @@ def portdetail(id):
 
 @app.route('/docker')
 def docker():
-    cmd = "sudo docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
-    webssh_flg = docker_action(cmd)
-    cmd = "sudo docker-compose -f docker/NextCloud-Docker/docker-compose.yml ps|grep Up|wc -l"
-    nextcloud_flg = docker_action(cmd)
+    cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
+    webssh_flg = process_action(cmd)
+    cmd = "docker-compose -f docker/NextCloud-Docker/docker-compose.yml ps|grep Up|wc -l"
+    nextcloud_flg = process_action(cmd)
     return render_template('docker.html',webssh=webssh_flg,nextcloud=nextcloud_flg)
 
 @app.route('/docker/webssh')
 def docker_webssh():
-    cmd = "sudo docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
-    flg = docker_action(cmd)
+    cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
+    flg = process_action(cmd)
     if flg == "1":
-        cmd = "sudo docker-compose -f docker/webssh/docker-compose.yml stop"
-        docker_action(cmd)
+        cmd = "docker-compose -f docker/webssh/docker-compose.yml stop"
+        process_action(cmd)
     else:
-        cmd = "sudo docker-compose -f docker/webssh/docker-compose.yml start"
-        docker_action(cmd)
+        cmd = "docker-compose -f docker/webssh/docker-compose.yml start"
+        process_action(cmd)
     return redirect(url_for('docker'))
 
 @app.route('/docker/nextcloud')
 def docker_nextcloud():
-    cmd = "sudo docker-compose -f docker/NextCloud-Docker/docker-compose.yml ps|grep Up|wc -l"
-    flg = docker_action(cmd)
+    cmd = "docker-compose -f docker/NextCloud-Docker/docker-compose.yml ps|grep Up|wc -l"
+    flg = process_action(cmd)
     if flg == "2":
-        cmd = "sudo docker-compose -f docker/NextCloud-Docker/docker-compose.yml stop"
-        docker_action(cmd)
+        cmd = "docker-compose -f docker/NextCloud-Docker/docker-compose.yml stop"
+        process_action(cmd)
     else:
-        cmd = "sudo docker-compose -f docker/NextCloud-Docker/docker-compose.yml start"
-        docker_action(cmd)
+        cmd = "docker-compose -f docker/NextCloud-Docker/docker-compose.yml start"
+        process_action(cmd)
     return redirect(url_for('docker'))
 
 
 @app.route('/terminal')
 def terminal():
     myip = get_ip_address()
-    cmd = "sudo docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
-    console_flg = docker_action(cmd)
+    cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
+    console_flg = process_action(cmd)
     params = sshconfig()
     return render_template('terminal.html', myip=myip, console_flg=console_flg,username=params['username'],password=params['password'])
 

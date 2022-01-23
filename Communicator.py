@@ -77,48 +77,6 @@ def ChatCommunication(rcvMsg):
     args = ("1", id)
     db.update_db(sql, args)
 
-def test(rcvMsg):
-    id = rcvMsg[0]
-    token = rcvMsg[1]
-    actor = rcvMsg[2]
-    message = rcvMsg[3]
-    answer = ""
-    strArry = message.split(",")
-    value1 = strArry[0]
-    if value1 == "hello":
-        answer = "hello"
-    # scan
-    elif value1 == "scan":
-        if len(strArry) == 2:
-            value2 = strArry[1]
-            answer = "I'll run a scan to "+value2
-        else:
-            answer = '''
-    I don't know what to do
-    If you want to do a standard survey using Nmap, type \"scan,IP\"
-    '''
-    # autorecon
-    elif value1 == "autorecon":
-        if len(strArry) == 2:
-            value2 = strArry[1]
-            answer = "I'll use Autorecon to run a scan to "+value2
-        else:
-            answer = '''
-        I don't know what to do
-        If you want to use Autorecon to enumetate the target information, enter \"autorecon,IP\"
-        '''
-    # other or help
-    else:
-        answer = '''
-        I don't konw :)
-        If you hello, I will say hello back.
-        If you want to do a standard survey using Nmap, type \"scan,IP\"
-        If you want to use Autorecon to enumetate the target information, enter \"autorecon,IP\"
-        '''
-    result = ">> " + value1 + "\n" + dedent(answer)
-    ans_msg = "@"+actor+" "+result
-    print(ans_msg)
-
 def ChatSendMessage(token, msg):
     ans_msg = ">> @all \n" + dedent(msg)
     cc.NextcloudTalkSendMessage(token, ans_msg)
@@ -127,4 +85,4 @@ if __name__ == "__main__":
     # rcvMsg = sys.argv[1:]
     # Debug args
     rcvMsg = ["1", "2", "bob", "scan"]
-    test(rcvMsg)
+    ChatCommunication(rcvMsg)

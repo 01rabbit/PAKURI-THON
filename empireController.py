@@ -6,7 +6,7 @@ from urllib3.exceptions import InsecureRequestWarning
 urllib3.disable_warnings(InsecureRequestWarning)
 from config import empire_conf as config
 
-headers = {'Content-Type': 'application/json',}
+HEADERS = {'Content-Type': 'application/json',}
 
 def getEmpireToken():
     args = config()
@@ -17,7 +17,7 @@ def getEmpireToken():
     payload = json.dumps(data)
     baseEndPoint = "/api/admin/login"
     url = args['server'] + baseEndPoint
-    response = requests.post(url, headers=headers, data=payload, verify=False)
+    response = requests.post(url, headers=HEADERS, data=payload, verify=False)
     result = response.json()
     try:
         if result['token']:
@@ -37,7 +37,7 @@ def createHTTPListener(token, listener, port):
     payload = json.dumps(data)
     baseEndPoint = "/api/listeners/http"
     url = args['server'] + baseEndPoint
-    response = requests.post(url, headers=headers, params=params, data=payload, verify=False)
+    response = requests.post(url, headers=HEADERS, params=params, data=payload, verify=False)
     result = response.json()
     try:
         if result['success']:
@@ -113,7 +113,7 @@ def generateStager(token, stagerName, listener):
         "Listener":listener
         }
     payload = json.dumps(data)
-    response = requests.post(url, headers=headers, params=params, data=payload, verify=False)
+    response = requests.post(url, headers=HEADERS, params=params, data=payload, verify=False)
     result = response.json()
     stagers = []
     try:
