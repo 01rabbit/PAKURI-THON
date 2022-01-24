@@ -64,7 +64,7 @@ def fileimport():
             # t_job_listにXMLファイルを読み込むJobを登録する
             command = "python xmlparser.py " + \
                 os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            process_action(command)
+            # process_action(command)
             jc.Set_myjob(command)
             return redirect(url_for('index'))
     return render_template('import.html')
@@ -80,14 +80,14 @@ def scan_nmap():
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename') + ".xml"
-        command = command + " && python xmlparser.py tmp/" + filename
+        command = command + " && python xmlparser.py "+ app.config['UPLOAD_FOLDER'] +"/" + filename
         jc.Set_myjob(command)
         return redirect(url_for('scan_nmap'))
     else:
         hosts = db.get_AllValues("""SELECT ip_address FROM t_host_list;""", "")
         ip = request.args.get('ip', '')
         myip = get_ip_address()
-        sql = """SELECT * FROM t_command_list WHERE type = %s;"""
+        sql = """SELECT * FROM t_command_list WHERE cmd_type = %s;"""
         nmap_list = db.get_AllValues(sql, "nmap")
         if request.args.get('setip') == 'Set':
             return redirect(url_for('scan_nmap', ip=ip))
@@ -106,7 +106,7 @@ def scan_nikto():
         hosts = db.get_AllValues("""SELECT ip_address FROM t_host_list;""", "")
         ip = request.args.get('ip', '')
         myip = get_ip_address()
-        sql = """SELECT * FROM t_command_list WHERE type = %s;"""
+        sql = """SELECT * FROM t_command_list WHERE cmd_type = %s;"""
         nikto_list = db.get_AllValues(sql, "nikto")
         if request.args.get('setip') == 'Set':
             return redirect(url_for('scan', ip=ip))
@@ -251,22 +251,6 @@ def empire_agent():
         i = len(agents)
     return render_template('empire_agent.html', agents=agents, i=i)
 
-# Test Page 
-@app.route('/test', methods=['GET', 'POST'])
-def test():
-    if request.method == 'POST':
-        command = request.form.get('command')
-        jc.Set_myjob(command)
-        return redirect(url_for('test'))
-    else:
-        hosts = db.get_AllValues("""SELECT ip_address FROM t_host_list;""", "")
-        ip = request.args.get('ip', '')
-        myip = get_ip_address()
-        sql = """SELECT * FROM t_command_list WHERE type = %s;"""
-        nmap_list = db.get_AllValues(sql, "nmap")
-        if request.args.get('setip') == 'Set':
-            return redirect(url_for('test', ip=ip))
-        return render_template('test.html', hosts=hosts, scan_nmap=nmap_list, commands=nmap_list, ip=ip, myip=myip)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

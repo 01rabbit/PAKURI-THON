@@ -63,6 +63,11 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 |:----------------|
 |If you are interested, please use them in an environment **under your control and at your own risk**. And, if you execute the PAKURI-THON on systems that are not under your control, it may be considered an attack and you may have legally liabillity for your action.|
 
+
+## Install
+
+Check out the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki) for instructions on getting started with PAKUTI-THON.
+
 ## Screenshot
 
 ### Main menu
@@ -117,6 +122,11 @@ PAKURI is not fully automated and requires the user interactions, to make sure t
 
 - OS: KAli Linux 2021.4a
 - Memory: 8.0GB
+- Browser:
+  - Firefox: 96.0
+  - Google Chrome: 97.0
+  - Chromium: 97.0
+  - Brave: 1.34.81
 
 ## Known Issues
 
