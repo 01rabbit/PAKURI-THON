@@ -106,15 +106,7 @@ Check out the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki) f
 
 ### Smartphone
 
-![IMG_1166](https://user-images.githubusercontent.com/16553787/150376495-5cc58397-e9f6-42c3-aa0e-a52e1302a3ab.PNG)
-
-![IMG_1167](https://user-images.githubusercontent.com/16553787/150376486-99222b26-2b5c-426a-95e9-9ab4a298b0d3.PNG)
-
-![IMG_1168](https://user-images.githubusercontent.com/16553787/150376461-ccfc3b50-f833-4f02-9313-d3346c3c1a0c.PNG)
-
----
-
-PAKURI is not fully automated and requires the user interactions, to make sure to proceed the pentest and to avoid any unintended attack or trouble.  
+![Smartphone](https://user-images.githubusercontent.com/16553787/150724478-4208f20a-9435-4ace-8b59-0f62e1b0db7f.png)
 
 ---
 
