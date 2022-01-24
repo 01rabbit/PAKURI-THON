@@ -159,19 +159,3 @@ def getCurrentAgents(token):
     else:
         agents.append(['','','','','','','','','',''])
     return(agents)
-
-# if __name__ == "__main__":
-    # token = getEmpireToken()
-    # listenerName = "pakuri"
-    # port = "8081"
-    # result = createHTTPListener(token, listenerName, port)
-    # print(result)
-    # result = getCurrentListeners(token, listenerName)
-    # print(result)
-    # stagerName = "multi/macro"
-    # result = generateStager(token, stagerName, listenerName)
-    # print(result)
-    # result = killListener(token, listenerName)
-    # print(result)
-    # result=getCurrentAgents(token)
-    # print(result)
