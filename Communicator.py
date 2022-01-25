@@ -80,9 +80,3 @@ def ChatCommunication(rcvMsg):
 def ChatSendMessage(token, msg):
     ans_msg = ">> @all \n" + dedent(msg)
     cc.NextcloudTalkSendMessage(token, ans_msg)
-    
-if __name__ == "__main__":
-    # rcvMsg = sys.argv[1:]
-    # Debug args
-    rcvMsg = ["1", "2", "bob", "scan"]
-    ChatCommunication(rcvMsg)

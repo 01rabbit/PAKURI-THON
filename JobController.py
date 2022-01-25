@@ -18,7 +18,6 @@ def Set_myjob(command):
     arg = (command, status, time)
     job_id = db.insert_db(sql, arg)
     msg = "[+] Adding: ID:{}  Command:{}".format(job_id, command)
-    # print(msg)
     cc.NextcloudTalkSendInformation(msg)
     # Get_myJobList()
 
@@ -27,11 +26,7 @@ def Run_command(job):
     sql = """UPDATE t_job_list SET status=%s, timestamp=%s WHERE id= %s;"""
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     args = ("running", time, job_id)
-    # msg = "[+] Running: ID:{}  Command:{}".format(job_id, command)
     db.update_db(sql, args)
-    # print(msg)
-    # chat message send
-    # cc.NextcloudTalkSendInformation(msg)
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -64,10 +59,8 @@ def Run_myjob(joblist):
                     if len(err) != 0:
                         print("[+] Error: {}".format(err))
                     print("[+] Done: Command: {}".format(command))
-                    # chat message send
                     cc.NextcloudTalkSendInformation("[+] Done: Job_ID: {}".format(job_id))
                     cc.NextcloudTalkSendInformation("[+] Done: Command: {}".format(command))
-                    
                     sql = """UPDATE t_job_list SET status=%s, timestamp=%s WHERE id= %s;"""
                     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     args = ("done", timestamp, job_id)
@@ -78,9 +71,6 @@ def Run_myjob(joblist):
     executer.shutdown()
 
 if __name__ == "__main__":
-    # command = "nmap -A 127.0.0.1"
-    # Set_myjob(command)
-
     while True:
         Get_myJobList()
         time.sleep(1) # sleep 1 sec short?

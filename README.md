@@ -1,6 +1,6 @@
 ![logo](static/images/pakuri3-banner.png)
 ![Mark](https://img.shields.io/badge/PAKURI-Mark%20III-red)
-![License](https://img.shields.io/github/license/01rabbit/PAKURI)
+![License](https://img.shields.io/github/license/01rabbit/PAKURI-THON)
 ![release-date](https://img.shields.io/github/release-date/01rabbit/PAKURI-THON)
 ![sns](https://img.shields.io/twitter/follow/PAKURI9?label=PAKURI&style=social)
 
@@ -44,20 +44,17 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 ## Tool used
 
-### Reconnaissance
+### Installed on kali linux
 
 - [Nmap](https://www.kali.org/tools/nmap/)
 - [Nikto](https://www.kali.org/tools/nikto/)
-- [AutoRecon](https://github.com/Tib3rius/AutoRecon)
-
-### Post Exploit
-
 - [PowerShell Empire](https://www.kali.org/tools/powershell-empire/)
 
-### Misc
+### Added tools
 
-- [WebSSH](https://github.com/huashengdun/webssh)
-- [Nextcloud](https://github.com/nextcloud)
+- [AutoRecon](https://github.com/Tib3rius/AutoRecon) ![License](https://img.shields.io/github/license/Tib3rius/AutoRecon)
+- [WebSSH](https://github.com/huashengdun/webssh) ![License](https://img.shields.io/github/license/huashengdun/webssh)
+- [Nextcloud](https://github.com/nextcloud) ![License](https://img.shields.io/github/license/nextcloud/docker)
 
 |**NOTE**  |
 |:----------------|

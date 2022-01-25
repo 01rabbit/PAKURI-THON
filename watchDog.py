@@ -18,7 +18,6 @@ if __name__ == "__main__":
             # ----NextCloud Chat----
             # Get Chat Messages
             tokenArry = cc.NextcloudTalkGetRoomToken()
-            # print(tokenArry)
             cc.NextcloudTalkGetReceivedmessage(tokenArry)
             # Check Messages
             sql = """SELECT id,token,actor,message FROM t_message_list WHERE response = %s;"""

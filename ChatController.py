@@ -33,9 +33,7 @@ def NextcloudTalkSendInformation(message):
         message : 送信メッセージ
     """
     params = config()
-    # token = params['inforoom']
     token = NextcloudTalkGetInfoRoomToken()[0]
-    # token = "2bssex5x"
     data = {
         "token": token,
         "message": message,
@@ -58,7 +56,6 @@ def NextcloudTalkGetInfoRoomToken():
     url = params['server'] + baseEndPoint + "/room"
     headers = {'content-type': 'application/json', 'OCS-APIRequest': 'true'}
     response = requests.get(url, headers=headers, auth=(params['username'], params['password']))
-    # print(response.text)
     try:
         responseXml = ET.fromstring(response.text)
     except ET.ParseError as e:
@@ -74,8 +71,6 @@ def NextcloudTalkGetInfoRoomToken():
         roomName = element.find("name").text
         if roomName == params['inforoom']:
             token.append(element.find("token").text)
-    # print(token[0])
-        # token.append( element.find("token").text)
     return token
 
 
@@ -91,7 +86,6 @@ def NextcloudTalkGetRoomToken():
     headers = {'content-type': 'application/json', 'OCS-APIRequest': 'true'}
     response = requests.get(url, headers=headers, auth=(
         params['username'], params['password']))
-    # print(response.text)
     try:
         responseXml = ET.fromstring(response.text)
     except ET.ParseError as e:
@@ -124,12 +118,8 @@ def NextcloudTalkGetReceivedmessage(token_array):
         payload = json.dumps(data)
         headers = {'content-type': 'application/json', 'OCS-APIRequest': 'true'}
         response = requests.get(url, data=payload, headers=headers, auth=(params['username'], params['password']))
-        # print(response.text)
         try:
             responseXml = ET.fromstring(response.text)
-            # path_w = "./test.xml"
-            # with open(path_w, mode="w", encoding="utf-8") as f:
-            #     f.write(response.text)
         except ET.ParseError as e:
             print("Parse error({0}): {1}".format(e.errno, e.strerror))
             sys.exit(2)
@@ -154,16 +144,11 @@ def NextcloudTalkGetReceivedmessage(token_array):
                         sql = """INSERT INTO t_message_list(msgid, token, actor, message, response) VALUES(%s,%s,%s,%s,%s) RETURNING id;"""
                         arg = (talkId, token, actor, message,"0")
                         db.insert_db(sql, arg)
-                        # print(actor, token, message)
-                        # print("ID:{} Token:{} From:{} Message:{}".format(talkId, token, actor, message))
             except:
                 pass
 
 if __name__ == "__main__":
-    # str_msg = sys.argv[1]
-    # NextcloudTalkSendInformation(str_msg)
     tokenArry = NextcloudTalkGetRoomToken()
-    # print(tokenArry)
     NextcloudTalkGetReceivedmessage(tokenArry)
     # Check Messages
     sql = """SELECT id,token,actor,message FROM t_message_list WHERE response = %s;"""
