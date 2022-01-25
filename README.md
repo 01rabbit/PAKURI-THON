@@ -60,10 +60,16 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 |:----------------|
 |If you are interested, please use them in an environment **under your control and at your own risk**. And, if you execute the PAKURI-THON on systems that are not under your control, it may be considered an attack and you may have legally liabillity for your action.|
 
+## Install & Usage
 
-## Install
+There are several steps to install it, please refer to the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki). After the installation is complete, run the following command.  
+**You'll need root privileges to run it!**
 
-Check out the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki) for instructions on getting started with PAKUTI-THON.
+``` shell
+sudo ./pkr3.sh
+```
+
+By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.
 
 ## Screenshot
 

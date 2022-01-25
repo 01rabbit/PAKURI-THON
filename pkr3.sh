@@ -69,26 +69,45 @@ fi
 printf "Booting up PAKURI-THON...  "
 if [ -z ${TMUX} ];then
     printf ">"
+    sleep 1
     tmux new-session -d -s "pakuri_session" -n "mein"
     printf ">"
+    sleep 1
     tmux split-window -h -t "pakuri_session:mein"
     printf ">"
+    sleep 1
     tmux split-window -v -t "pakuri_session:mein"
     printf ">"
+    sleep 1
     tmux send-keys -t "pakuri_session:mein.0" "pipenv shell" C-m
-    sleep 2
     printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
     tmux send-keys -t "pakuri_session:mein.0" "python app.py" C-m
-    sleep 1
     printf ">"
+    sleep 1
     tmux send-keys -t "pakuri_session:mein.1" "pipenv shell" C-m
-    sleep 2
     printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
+    printf ">"
+    sleep 1
     tmux send-keys -t "pakuri_session:mein.1" "python watchDog.py" C-m
-    sleep 1
     printf ">"
-    tmux send-keys -t "pakuri_session:mein.2" "powershell-empire server --username empireadmin --password password123" C-m
     sleep 1
+    tmux send-keys -t "pakuri_session:mein.2" "powershell-empire server --username empireadmin --password password123" C-m
     printf "> ${GREEN_b}done!${NC}\n"
     sleep 1
     tmux -2 attach-session -t "pakuri_session".2
