@@ -69,7 +69,7 @@ There are several steps to install it, please refer to the [PAKURI-THON wiki](ht
 sudo ./pkr3.sh
 ```
 
-By default, PAKURI-THON is wating for you on port 5000, so please access it with a web browser.
+By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.
 
 ## Screenshot
 

@@ -8,13 +8,14 @@ flask-script==2.0.6
 flask-sqlalchemy==2.5.1
 flask==2.0.2
 gevent==21.8.0
-greenlet==1.1.2; platform_python_implementation == 'CPython'
+greenlet==1.1.2; python_version >= '3' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32'))))))
 idna==3.3; python_version >= '3'
 itsdangerous==2.0.1
 jinja2==3.0.2
 markupsafe==2.0.1
 netifaces==0.11.0
 paramiko==2.8.0
+psycopg2-binary==2.9.3
 psycopg2==2.9.1
 pycparser==2.20
 pynacl==1.4.0
