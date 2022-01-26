@@ -69,22 +69,6 @@ There are several steps to install it, please refer to the [PAKURI-THON wiki](ht
 sudo ./pkr3.sh
 ```
 
-``` text
-   ___  ___   __ ____  _____  ____   ________ ______  _  __
-  / _ \/ _ | / //_/ / / / _ \/  _/__/_  __/ // / __ \/ |/ /
- / ___/ __ |/ ,< / /_/ / , _// //___// / / _  / /_/ /    / 
-/_/  /_/ |_/_/|_|\____/_/|_/___/    /_/ /_//_/\____/_/|_/  
-                                                           
-Tue Jan 25 08:24:53 AM EST 2022
-Running system check...
-Checking for root access... OK
-Checking docker startup... OK
-Checking for postgres...OK
-Checking for WebSSH...OK
-Checking for NextCloud...OK
-Booting up PAKURI-THON...  >>>>>>>>> done!
-```
-
 By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.
 
 ## Screenshot
