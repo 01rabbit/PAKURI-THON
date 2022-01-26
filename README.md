@@ -79,9 +79,10 @@ Running system check...
 Checking for root access... OK
 Checking docker startup... OK
 Checking for postgres...OK
+Checking for SSH Service...OK
 Checking for WebSSH...OK
 Checking for NextCloud...OK
-Booting up PAKURI-THON...  >>>>>>>>> done!
+Booting up PAKURI-THON...  >>>>>>>>>>>>>>>>> done!
 ```
 
 By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.  
