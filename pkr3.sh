@@ -41,6 +41,15 @@ if systemctl status docker.service | grep "active (running)" > /dev/null; then
         echo "Start Postgres. Restat this script."
         exit 1
     fi
+    printf "Checking for SSH Service..."
+    if systemctl status ssh.service | grep "active (running)" > /dev/null; then
+        printf "${GREEN_b}OK${NC}\n"
+    else
+        printf "${RED_b}Failed${NC}\n"
+        systemctl start ssh.service
+        echo "Start SSH Servece. Restart this script."
+        exit 1
+    fi
     printf "Checking for WebSSH..."
     if docker-compose -f docker/webssh/docker-compose.yml ps | grep Up > /dev/null; then
         printf "${GREEN_b}OK${NC}\n"
@@ -70,44 +79,32 @@ printf "Booting up PAKURI-THON...  "
 if [ -z ${TMUX} ];then
     printf ">"
     sleep 1
-    tmux new-session -d -s "pakuri_session" -n "mein"
+    tmux new-session -d -s "pakuri_session" -n "main"
     printf ">"
     sleep 1
-    tmux split-window -h -t "pakuri_session:mein"
+    tmux split-window -h -t "pakuri_session:main"
     printf ">"
     sleep 1
-    tmux split-window -v -t "pakuri_session:mein"
+    tmux split-window -v -t "pakuri_session:main"
     printf ">"
     sleep 1
-    tmux send-keys -t "pakuri_session:mein.0" "pipenv shell" C-m
+    tmux send-keys -t "pakuri_session:main.0" "pipenv shell" C-m
+    for ((i=0; i<5; i++)); do
+        printf ">"
+        sleep 1
+    done
+    tmux send-keys -t "pakuri_session:main.0" "python app.py" C-m
     printf ">"
     sleep 1
+    tmux send-keys -t "pakuri_session:main.1" "pipenv shell" C-m
+    for ((i=0; i<5; i++)); do
+        printf ">"
+        sleep 1
+    done
+    tmux send-keys -t "pakuri_session:main.1" "python watchDog.py" C-m
     printf ">"
     sleep 1
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    tmux send-keys -t "pakuri_session:mein.0" "python app.py" C-m
-    printf ">"
-    sleep 1
-    tmux send-keys -t "pakuri_session:mein.1" "pipenv shell" C-m
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    printf ">"
-    sleep 1
-    tmux send-keys -t "pakuri_session:mein.1" "python watchDog.py" C-m
-    printf ">"
-    sleep 1
-    tmux send-keys -t "pakuri_session:mein.2" "powershell-empire server --username empireadmin --password password123" C-m
+    tmux send-keys -t "pakuri_session:main.2" "powershell-empire server --username empireadmin --password password123" C-m
     printf "> ${GREEN_b}done!${NC}\n"
     sleep 1
     tmux -2 attach-session -t "pakuri_session".2

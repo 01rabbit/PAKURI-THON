@@ -5,7 +5,7 @@ from subprocess import PIPE
 import db_controller as db
 import JobController as jc
 import empireController as ec
-import netifaces as ni  # 追加パッケージ
+import netifaces as ni
 from config import webssh_conf as sshconfig
 from config import empire_conf as empireconfig
 from flask import Flask, redirect, render_template, request, url_for

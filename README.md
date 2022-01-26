@@ -56,59 +56,72 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 - [WebSSH](https://github.com/huashengdun/webssh) ![License](https://img.shields.io/github/license/huashengdun/webssh)
 - [Nextcloud](https://github.com/nextcloud) ![License](https://img.shields.io/github/license/nextcloud/docker)
 
-|**NOTE**  |
+|**CAUTION**  |
 |:----------------|
 |If you are interested, please use them in an environment **under your control and at your own risk**. And, if you execute the PAKURI-THON on systems that are not under your control, it may be considered an attack and you may have legally liabillity for your action.|
 
 ## Install & Usage
 
-There are several steps to install it, please refer to the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki). After the installation is complete, run the following command.  
-**You'll need root privileges to run it!**
+There are several steps to install it, please refer to the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki). After the installation is complete, run the following command. **You'll need root privileges to run it!**
 
 ``` shell
 sudo ./pkr3.sh
 ```
 
-By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.
+By default, PAKURI-THON is wating for you on port 5555, so please access it with a web browser.  
+The following ports are used by PAKURI-THON.
+| Application | Port |
+| ---- | ---- |
+| PAKURI-THON | 5555 |
+| PostgreSQL | 15432 |
+| Nextcloud | 8080 |
+| WebSSH | 8888 |
+| PowerShell Empire | 1337, 8088 |
 
 ## Screenshot
 
 ### Main menu
 
+It is designed to be operable on smart phone and tablets. The honeycomb struture menu at the bottom right is a shortcut menu for one-handed operation. (Press the bottom right button to expand the menu as shown in the image. Normally, it is hidden.)  
 ![main](https://user-images.githubusercontent.com/16553787/150373461-54ccf9bd-282e-477f-a7d9-718427029032.png)
 
 ### Target
 
+When a scan is performed and a host is found, an icon will be displayed. Click on the icon to display detailed information about the host.  
 ![target](https://user-images.githubusercontent.com/16553787/150374348-78541bb6-e567-40e9-8e09-f696dce558d6.png)
 
 ![host](https://user-images.githubusercontent.com/16553787/150375012-b956b589-b504-4a83-84d5-a125d5f80955.png)
 
 ### Recon
 
+You can use Nmap and Nikto for reconnaissance activities. You can also use the terminal if you want to command other Kali tools.  
 ![recon1](https://user-images.githubusercontent.com/16553787/150374615-a8a29669-98c5-42ea-abe2-c99f7000f859.png)
 
 ![recon2](https://user-images.githubusercontent.com/16553787/150374846-c6b36c14-6034-4f1f-bfdd-35721da738c4.png)
 
-![port](https://user-images.githubusercontent.com/16553787/150375148-029fcffc-f7e7-4318-a411-39b6c5bbd4be.png)
-
 ### Post-Exsploit
 
+You can operate PowerShell Empire, create Stagers, and manage Agents.  
 ![tool](https://user-images.githubusercontent.com/16553787/150375389-7097db57-f46e-425d-929b-08eb2ab390f6.png)
 
 ### Terminal
 
+By using WebSSH, you can operate the terminal console of PAKURI-THON directly on your web browser.  
 ![terminal](https://user-images.githubusercontent.com/16553787/150375599-dc4f1708-5628-4a41-a9e2-d5800ce814b8.png)
 
 ### Chat : Nextcloud
 
+You can use Nextcloud chat to facilitate communication within your team. You can execute various commands by simply commanding the bot in the chat.  
 ![chat](https://user-images.githubusercontent.com/16553787/150375922-858e1764-f90a-4329-a047-1c187e4cf1b6.png)
 
 ### Docker
 
+Start and stop Docker.  
 ![docker](https://user-images.githubusercontent.com/16553787/150376075-61a5c06e-dff3-401d-95cf-0b8aa3a15fb1.png)
 
 ### Smartphone
 
+If you use a smart phone, you can use the Nextcloud application.  
 ![Smartphone](https://user-images.githubusercontent.com/16553787/150724478-4208f20a-9435-4ace-8b59-0f62e1b0db7f.png)
 
 ---
