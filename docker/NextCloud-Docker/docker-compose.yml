@@ -7,12 +7,15 @@ volumes:
 services:
   db:
     image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
     restart: always
     volumes:
       - db:/var/lib/mysql
+    ports:
+      - 3309:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=${ENV_MYSQL_ROOT_PASSWORD}  # .envファイルに環境変数を設定
-      - MYSQL_PASSWORD=${ENV_MYSQL_PASSWORD}  # .envファイルに環境変数を設定
+      - MYSQL_ROOT_PASSWORD=${ENV_MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${ENV_MYSQL_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
 

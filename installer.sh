@@ -50,10 +50,11 @@ date
 echo "Step 3/10 : Creating service.ini..."
 cat <<EOF > service.ini
 [postgresql]
-user = builder
+user = rot
 password = password
 host = localhost
-database = builder
+port = 15432
+database = pakuri
 [nextcloud]
 server = http://$IP_ADDRESS:8080
 EOF
@@ -129,7 +130,7 @@ printf "${GREEN_b}OK${NC}\n"
 cd ../../..
 
 printf "Step 10/10 : Set up the environment..."
-apt install libpq-dev -y
+apt install libpq-dev pipenv -y
 pipenv sync
 printf "${GREEN_b}OK${NC}\n"
 
