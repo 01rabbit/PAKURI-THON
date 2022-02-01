@@ -62,7 +62,14 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 ## Install & Usage
 
-There are several steps to install it, please refer to the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki). After the installation is complete, run the following command. **You'll need root privileges to run it!**
+There are several means of installation. For manual installation, please refer to the [PAKURI-THON wiki](https://github.com/01rabbit/PAKURI-THON/wiki).  
+If you want to use the installer, please run the following command. **You'll need root privileges to run it!**
+
+``` shell
+sudo ./install.sh
+```
+
+After the installation is complete, run the following command. **You'll need root privileges to run it!**
 
 ``` shell
 sudo ./pkr3.sh
