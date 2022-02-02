@@ -50,7 +50,7 @@ date
 echo "Step 3/10 : Creating service.ini..."
 cat <<EOF > service.ini
 [postgresql]
-user = rot
+user = root
 password = password
 host = localhost
 port = 15432
