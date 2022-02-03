@@ -39,6 +39,8 @@ CREATE TABLE t_port_list (
 CREATE TABLE t_job_list (
     id serial NOT NULL,
     command text NULL,
+    commander varchar NULL,
+    "token" varchar NULL,
     status varchar NULL,
     "timestamp" timestamp NULL,
     CONSTRAINT t_job_list_pk PRIMARY KEY (id)
