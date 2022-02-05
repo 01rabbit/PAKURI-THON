@@ -138,5 +138,6 @@ pipenv sync
 printf "${GREEN_b}OK${NC}\n"
 
 echo "Instll complete!"
+
 echo "Please accsess http://$IP:8080 with a web browser to complete the Nextcloud configuration."
 printf "When you are finished, type ${RED_b}sudo ./pkr3.sh${NC} to start PAKURI-THON.\n"
