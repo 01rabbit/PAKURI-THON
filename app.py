@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'tmp'
 ALLOWED_EXTENSIONS = {'xml','txt'}
+COMMANDER = "PAKURI-THON"
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -65,7 +66,7 @@ def fileimport():
             command = "python xmlparser.py " + \
                 os.path.join(app.config['UPLOAD_FOLDER'], filename)
             # process_action(command)
-            jc.Set_myjob(command)
+            jc.Set_myjob(command, COMMANDER, "")
             return redirect(url_for('index'))
     return render_template('import.html')
 
@@ -81,7 +82,7 @@ def scan_nmap():
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename') + ".xml"
         command = command + " && python xmlparser.py "+ app.config['UPLOAD_FOLDER'] +"/" + filename
-        jc.Set_myjob(command)
+        jc.Set_myjob(command, COMMANDER, "")
         return redirect(url_for('scan_nmap'))
     else:
         hosts = db.get_AllValues("""SELECT ip_address FROM t_host_list;""", "")
@@ -100,7 +101,7 @@ def scan_nikto():
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename')
         command = command + " && python xmlparser.py tmp/" + filename 
-        jc.Set_myjob(command)
+        jc.Set_myjob(command, COMMANDER, "")
         return redirect(url_for('scan_nikto'))
     else:
         hosts = db.get_AllValues("""SELECT ip_address FROM t_host_list;""", "")

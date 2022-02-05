@@ -10,12 +10,23 @@ BLUE_b='\e[1;34m'
 PURPLE_b='\e[1;35m'
 LIGHTBLUE_b='\e[1;36m'
 
-IFACE="eth0"
-IP_ADDRESS=$(/sbin/ip -f inet -o addr show "$IFACE" | cut -d\  -f 7 | cut -d/ -f 1)
-
 clear
-echo "Step 1/10 Running system check..."
-printf "Checking for root access... "
+figlet -v &> /dev/null
+if [ $? -eq 0 ]; then
+    printf "${RED_b}"
+    figlet -w 160 -f smslant "PAKURI-THON"
+    printf "${GREEN_b}"
+    figlet -w 160 -f smslant "Installer"
+    printf  "${NC}\n"
+else
+    printf "${RED_b}Figlet was not installed.${NC}\n"
+    printf "${RED_b}Install figlet.${NC}\n"
+    apt update && apt install figlet -y
+    echo "Installed figlet. Please run this script again."
+    exit 1
+fi
+date
+printf "Step 1/10 : Checking for root access... "
 if [ "$EUID" -ne 0 ]; then
     printf "${RED_b}Failed${NC}\n"
     printf "Please run as ${RED_b}root${NC}\n"
@@ -25,29 +36,18 @@ else
 fi
 
 printf "Step 2/10 : Checking for internet connection... "
-if ping -q -c 1 -W 1 google.com >/dev/null; then
+if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
     printf "${GREEN_b}OK${NC}\n"
 else
     printf "${RED_b}Failed${NC}\n"
     printf "Please check your internet connection.\n"
     exit 1
 fi
-
-figlet -v &> /dev/null
-if [ $? -eq 0 ]; then
-    figlet -w 160 -f smslant "PAKURI-THON"
-    echo -e "${Green_b}"
-    figlet -w 160 -f smslant "Installer"
-    echo -e "${NC}\n"
-else
-    echo -e "${RED_b}Figlet was not installed.${NC}"
-    echo -e "${RED_b}Install figlet.${NC}"
-    apt update && apt install figlet -y
-    echo "Installed figlet. Please run this script again."
-    exit 1
-fi
-date
+echo ""
 echo "Step 3/10 : Creating service.ini..."
+echo "Enter the IP address of your server:"
+read -p "IPAddress: " IP
+echo ""
 cat <<EOF > service.ini
 [postgresql]
 user = root
@@ -56,10 +56,11 @@ host = localhost
 port = 15432
 database = pakuri
 [nextcloud]
-server = http://$IP_ADDRESS:8080
+server = http://$IP:8080
 EOF
+echo ""
 echo "Step 4/10 : Nextcloud login information..."
-echo "Enter the name(ID) and password(at least 8 characters, uppercase and lowercase letters, symbols, and numbers) of chatbot you want to use."
+printf "Enter the name(ID) and password(${RED_b}at least 8 characters, uppercase and lowercase letters, symbols, and numbers ${NC}) of chatbot you want to use.\n"
 read -p "Name(ID): " NAME
 read -sp "Password: " PASSWORD
 echo ""
@@ -69,6 +70,7 @@ password = $PASSWORD
 inforoom = Information
 [webssh]
 EOF
+echo ""
 echo "Step 5/10 : SSH login information..."
 echo "Enter the username and password for ssh login."
 read -p "USERNAME: " USERNAME
@@ -81,7 +83,7 @@ password = $ENCPASS
 [empire]
 username = empireadmin
 password = password123
-server = https://$IP_ADDRESS:1337
+server = https://$IP:1337
 listener = pakuri
 port = 8088
 EOF
@@ -127,13 +129,15 @@ printf "Step 9/10 : PostgreSQL... "
 cd postgres
 docker-compose up -d
 printf "${GREEN_b}OK${NC}\n"
-cd ../../..
+cd ../../
 
 printf "Step 10/10 : Set up the environment..."
-apt install libpq-dev pipenv -y
+apt install pipenv -y
+apt install libpq-dev -y
 pipenv sync
 printf "${GREEN_b}OK${NC}\n"
 
 echo "Instll complete!"
-echo "Please accsess http://$IP_ADDRESS:8080 with a web browser to complete the Nextcloud configuration."
+
+echo "Please accsess http://$IP:8080 with a web browser to complete the Nextcloud configuration."
 printf "When you are finished, type ${RED_b}sudo ./pkr3.sh${NC} to start PAKURI-THON.\n"

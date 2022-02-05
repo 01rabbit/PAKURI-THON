@@ -11,6 +11,16 @@ PURPLE_b='\e[1;35m'
 LIGHTBLUE_b='\e[1;36m'
 
 clear
+figlet -v &> /dev/null
+if [ $? -eq 0 ]; then
+    figlet -w 160 -f smslant "PAKURI-THON"
+else
+    echo -e "${RED_b}Figlet not installed.${NC}"
+    echo -e "${RED_b}Please install figlet.${NC}"
+    exit 1
+fi
+
+date
 echo "Running system check..."
 printf "Checking for root access... "
 if [ "$EUID" -ne 0 ]; then
@@ -20,16 +30,6 @@ if [ "$EUID" -ne 0 ]; then
 else
     printf "${GREEN_b}OK${NC}\n"
 fi
-
-figlet -v &> /dev/null
-if [ $? -eq 0 ]; then
-    figlet -w 160 -f smslant "PAKURI-THON"
-else
-    echo -e "${RED_b}Figlet not installed.${NC}"
-    echo -e "${RED_b}Please install figlet.${NC}"
-    exit 1
-fi
-date
 
 printf "Checking docker startup... "
 if systemctl status docker.service | grep "active (running)" > /dev/null; then

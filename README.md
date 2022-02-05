@@ -102,6 +102,10 @@ The following ports are used by PAKURI-THON.
 | WebSSH | 8888 |
 | PowerShell Empire | 1337, 8088 |
 
+## Demo
+
+[![](https://img.youtube.com/vi/14Mz13PY5-I/0.jpg)](https://www.youtube.com/watch?v=14Mz13PY5-I)
+
 ## Screenshot
 
 ### Main menu

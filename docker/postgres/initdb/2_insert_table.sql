@@ -14,6 +14,8 @@ INSERT INTO t_command_list (cmd_name,value,cmd_type,description) VALUES
     ('Quick_scan_plus','nmap -sV -T4 -O -F --version-light','nmap','Do a fast scan, but also detect the OS (-O) and look at the service version for open ports (-sV , --version-light)'),
     ('Quick_Traceroute','nmap -sn --traceroute','nmap','Do a ping scan (-sn) with traceroute included (--traceroute) (normal ping scans do not use traceroute)'),
     ('Regular_scan','nmap','nmap','Normal Nmap scan. Run a regular Nmap against the target.'),
+    ('Vuln_scan', 'nmap -Pn -sV --script vuln', 'nmap', 'Use Nmap''s script to probe for vulnerabilities.'),
+    ('Vuln_scan_All_TCP', 'nmap -Pn -sV -p- --script vuln', 'nmap', 'Use Nmap''s script to probe for vulnerabilities. All TCP Ports.'),
     ('Slow_comprehensive_scan','nmap -sS -sU -T4 -A -v -PE -PP -PS80,443 -PA3389 -PU40125 -PY -g 53 --script "default or (discovery and safe)"','nmap','Perform a slow but extensive scan. Specifically.
     Perform a SYN scan (-sS) and a UDP scan (-sU).
     Speed up the scan timing (-T4)
