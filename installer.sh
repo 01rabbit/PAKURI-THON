@@ -10,9 +10,6 @@ BLUE_b='\e[1;34m'
 PURPLE_b='\e[1;35m'
 LIGHTBLUE_b='\e[1;36m'
 
-IFACE="eth0"
-IP_ADDRESS=$(/sbin/ip -f inet -o addr show "$IFACE" | cut -d\  -f 7 | cut -d/ -f 1)
-
 clear
 figlet -v &> /dev/null
 if [ $? -eq 0 ]; then
