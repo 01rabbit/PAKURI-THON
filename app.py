@@ -252,6 +252,11 @@ def empire_agent():
         i = len(agents)
     return render_template('empire_agent.html', agents=agents, i=i)
 
+@app.route('/matter')
+def post():
+    data = request.json
+    print(data)
+    return json.dumps(dict())
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5555)

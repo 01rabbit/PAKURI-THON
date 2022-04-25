@@ -125,6 +125,22 @@ docker-compose up -d
 printf "${GREEN_b}OK${NC}\n"
 cd ..
 
+# Test Mattermost
+printf "Step 9/10 : Testing Mattermost... "
+docker-compose -f mattermost-docker/docker-compose.yml ps &> /dev/null
+if [ $? -eq 0 ]; then
+    cd mattermost-docker
+    docker-compose up -d
+    printf "${GREEN_b}OK${NC}\n"
+else
+    git clone https://github.com/mattermost/mattermost-docker.git
+    cd mattermost-docker
+    mkdir -pv ./volumes/app/mattermost/{data,logs,config,plugins,client-plugins}
+    chown -R 2000:2000 ./volumes/app/mattermost/
+    docker-compose up -d
+    printf "${GREEN_b}Installed${NC}\n"
+fi
+
 printf "Step 9/10 : PostgreSQL... "
 cd postgres
 docker-compose up -d
