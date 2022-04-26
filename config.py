@@ -31,5 +31,8 @@ def webssh_conf():
 def empire_conf():
     return config('service.ini','empire')
 
+def matter_conf():
+    return config('service.ini','mattermost')
+
 if __name__ == '__main__':
     config()
