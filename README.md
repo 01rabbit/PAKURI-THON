@@ -42,6 +42,19 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 - The use of chatbots. Just talk to the chatbot (give instructions) and it will execute the command, which increases convenience as there is no need to switch the means of information sharing within the team.
 - PowerShell Empire, which is used in actual cyber attacks, can be controlled through a web interface and can easily be used for red team training.
 
+## Assumed attack exercise scenario (Red Team Training)
+
+### Scenario 1
+
+A raspberry pi4 with PAKURI-THON installed is connected to an air-gapped target system and concealed.
+The Attackers (Red Team) can connect to the PAKURI-THON wireless LAN and attack beyond the air gap of the target system.
+In this case, if the Attackers (Red Team) had entered the air gap as usual and continued the attack, the guard would have been called immediately as an obvious suspicious act. However, if PAKURI-THON is used, it will look like a smartphone or tablet being operated, and the cyber-attack will not be explicitly exposed until later.
+
+### Scenario 2
+
+Would you have an antenna attached to your laptop when launching an Evil Twin Attack or other MITM attack? Obviously, the appearance would be suspicious and would attract the attention of many people.
+With PAKURI-THON, however, once the mobile battery and antenna are connected to the raspberry pi4, there is no problem if you pack it directly into your backpack. Since operation can be done with a smartphone or tablet, no one will be suspicious of its appearance. And the Attackers (Red Team) can efficiently gather information on the target.
+
 ## Tool used
 
 ### Installed on kali linux
