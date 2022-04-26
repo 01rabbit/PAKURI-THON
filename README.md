@@ -42,6 +42,19 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 - The use of chatbots. Just talk to the chatbot (give instructions) and it will execute the command, which increases convenience as there is no need to switch the means of information sharing within the team.
 - PowerShell Empire, which is used in actual cyber attacks, can be controlled through a web interface and can easily be used for red team training.
 
+## Assumed attack exercise scenario (Red Team Training)
+
+### Scenario 1
+
+A raspberry pi4 with PAKURI-THON installed is connected to an air-gapped target system and concealed.
+The Attackers (Red Team) can connect to the PAKURI-THON wireless LAN and attack beyond the air gap of the target system.
+In this case, if the Attackers (Red Team) had entered the air gap as usual and continued the attack, the guard would have been called immediately as an obvious suspicious act. However, if PAKURI-THON is used, it will look like a smartphone or tablet being operated, and the cyber-attack will not be explicitly exposed until later.
+
+### Scenario 2
+
+Would you have an antenna attached to your laptop when launching an Evil Twin Attack or other MITM attack? Obviously, the appearance would be suspicious and would attract the attention of many people.
+With PAKURI-THON, however, once the mobile battery and antenna are connected to the raspberry pi4, there is no problem if you pack it directly into your backpack. Since operation can be done with a smartphone or tablet, no one will be suspicious of its appearance. And the Attackers (Red Team) can efficiently gather information on the target.
+
 ## Tool used
 
 ### Installed on kali linux
@@ -54,7 +67,7 @@ Best of all, wouldn't it be cool to be able to do a pen test just by talking to 
 
 - [AutoRecon](https://github.com/Tib3rius/AutoRecon) ![License](https://img.shields.io/github/license/Tib3rius/AutoRecon)
 - [WebSSH](https://github.com/huashengdun/webssh) ![License](https://img.shields.io/github/license/huashengdun/webssh)
-- [Nextcloud](https://github.com/nextcloud) ![License](https://img.shields.io/github/license/nextcloud/docker)
+- [Mattermost](https://github.com/mattermost/mattermost-docker) ![License](https://img.shields.io/github/license/mattermost/mattermost-docker)
 
 |**CAUTION**  |
 |:----------------|
@@ -88,7 +101,6 @@ Checking docker startup... OK
 Checking for postgres...OK
 Checking for SSH Service...OK
 Checking for WebSSH...OK
-Checking for NextCloud...OK
 Booting up PAKURI-THON...  >>>>>>>>>>>>>>>>> done!
 ```
 
@@ -98,9 +110,9 @@ The following ports are used by PAKURI-THON.
 | ---- | ---- |
 | PAKURI-THON | 5555 |
 | PostgreSQL | 15432 |
-| Nextcloud | 8080 |
 | WebSSH | 8888 |
 | PowerShell Empire | 1337, 8088 |
+| Mattermost | 8065 |
 
 ## Demo
 
@@ -137,10 +149,11 @@ You can operate PowerShell Empire, create Stagers, and manage Agents.
 By using WebSSH, you can operate the terminal console of PAKURI-THON directly on your web browser.  
 ![terminal](https://user-images.githubusercontent.com/16553787/150375599-dc4f1708-5628-4a41-a9e2-d5800ce814b8.png)
 
-### Chat : Nextcloud
+### Chat : Mattermost
 
-You can use Nextcloud chat to facilitate communication within your team. You can execute various commands by simply commanding the bot in the chat.  
-![chat](https://user-images.githubusercontent.com/16553787/150375922-858e1764-f90a-4329-a047-1c187e4cf1b6.png)
+You can use Mattermost as a Slack-like chat tool to facilitate communication within your team. You can execute various commands simply by commanding the bot in the chat.  
+The chat tool mechanism can also be easily applied to Slack  
+![chat](https://user-images.githubusercontent.com/16553787/165287145-bd3cfb59-8062-4dfa-9aa2-91bdfb7aa812.png)
 
 ### Docker
 
@@ -149,8 +162,7 @@ Start and stop Docker.
 
 ### Smartphone
 
-If you use a smart phone, you can use the Nextcloud application.  
-![Smartphone](https://user-images.githubusercontent.com/16553787/150724478-4208f20a-9435-4ace-8b59-0f62e1b0db7f.png)
+If you use a smart phone, you can use the Mattermost application.  
 
 ---
 

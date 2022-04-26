@@ -55,19 +55,6 @@ password = password
 host = localhost
 port = 15432
 database = pakuri
-[nextcloud]
-server = http://$IP:8080
-EOF
-echo ""
-echo "Step 4/10 : Nextcloud login information..."
-printf "Enter the name(ID) and password(${RED_b}at least 8 characters, uppercase and lowercase letters, symbols, and numbers ${NC}) of chatbot you want to use.\n"
-read -p "Name(ID): " NAME
-read -sp "Password: " PASSWORD
-echo ""
-cat <<EOF >> service.ini
-username = $NAME
-password = $PASSWORD
-inforoom = Information
 [webssh]
 EOF
 echo ""
@@ -119,11 +106,21 @@ else
 fi
 cd ..
 
-printf "Step 8/10 : Nextcloud... "
-cd NextCloud-Docker
-docker-compose up -d
-printf "${GREEN_b}OK${NC}\n"
-cd ..
+# Test Mattermost
+printf "Step 8/10 : Testing Mattermost... "
+docker-compose -f mattermost-docker/docker-compose.yml ps &> /dev/null
+if [ $? -eq 0 ]; then
+    cd mattermost-docker
+    docker-compose up -d
+    printf "${GREEN_b}OK${NC}\n"
+else
+    git clone https://github.com/mattermost/mattermost-docker.git
+    cd mattermost-docker
+    mkdir -pv ./volumes/app/mattermost/{data,logs,config,plugins,client-plugins}
+    chown -R 2000:2000 ./volumes/app/mattermost/
+    docker-compose up -d
+    printf "${GREEN_b}Installed${NC}\n"
+fi
 
 printf "Step 9/10 : PostgreSQL... "
 cd postgres

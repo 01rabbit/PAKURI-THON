@@ -253,5 +253,11 @@ def empire_agent():
     return render_template('empire_agent.html', agents=agents, i=i)
 
 
+@app.route('/bot-test', methods=['POST'])
+def bot_replay():
+    import MatterController as mc
+    return mc.botbot_reply()
+
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5555)
