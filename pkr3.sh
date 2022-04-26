@@ -61,15 +61,6 @@ if systemctl status docker.service | grep "active (running)" > /dev/null; then
         echo "Start WebSSH. Restart this script."
         exit 1
     fi
-    printf "Checking for NextCloud..."
-    if docker-compose -f docker/NextCloud-Docker/docker-compose.yml ps | grep Up > /dev/null; then
-        printf "${GREEN_b}OK${NC}\n"
-    else
-        printf "${RED_b}Failed${NC}\n"
-        docker-compose -f docker/NextCloud-Docker/docker-compose.yml start
-        echo "Start NextCloud. Restart this script."
-        exit 1
-    fi
 else
     printf "${RED_b}Failed${NC}\n"
     systemctl start docker.service

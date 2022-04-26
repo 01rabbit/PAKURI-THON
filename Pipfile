@@ -39,5 +39,6 @@ sqlalchemy = "==1.4.25"
 webssh = "==1.5.3"
 update = "*"
 werkzeug = "*"
+slackweb = "*"
 
 [dev-packages]

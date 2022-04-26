@@ -1,5 +1,6 @@
 import json
 import requests
+import slackweb
 from flask import request
 from config import matter_conf as config
 import datetime
@@ -13,17 +14,18 @@ def get_timestamp():
 
 def botbot_reply():
     params = config()
-    BOT_TOKEN = params['bot_id']
+    hooks = params['webhooks']
+    # BOT_TOKEN = params['bot_id']
     posted_user = request.json['user_name']
-    CHANNEL_ID = params['channel_id']
+    # CHANNEL_ID = params['channel_id']
     posted_msg  = request.json['text']
-    baseEndPoint = "/api/v4/posts"
-    url = params['server'] + baseEndPoint
+    # baseEndPoint = "/api/v4/posts"
+    # url = params['server'] + baseEndPoint
     
-    reply_headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + BOT_TOKEN,
-    }
+    # reply_headers = {
+    #     'Content-Type': 'application/json',
+    #     'Authorization': 'Bearer ' + BOT_TOKEN,
+    # }
 
 
     answer = ""
@@ -69,24 +71,27 @@ def botbot_reply():
 
     result = dedent(answer)
     
-    reply_data = {
-        "channel_id": CHANNEL_ID,
-        "message": f"@{posted_user} " + result,
-        "props": {
-            "attachments": [
-                    {
-                "author_name": posted_user,
-                "text": posted_msg,
-                }
-            ]
-        },
-    }
+    # reply_data = {
+    #     "channel_id": CHANNEL_ID,
+    #     "message": f"@{posted_user} " + result,
+    #     "props": {
+    #         "attachments": [
+    #                 {
+    #             "author_name": posted_user,
+    #             "text": posted_msg,
+    #             }
+    #         ]
+    #     },
+    # }
+    
+    mattermost = slackweb.Slack(url=params['webhooks'])
     
     sql = """UPDATE t_message_list SET response = %s WHERE id = %s;"""
     args = ("1", id)
     db.update_db(sql, args)
 
-    return requests.post(url, headers=reply_headers, data=json.dumps(reply_data))
+    return mattermost.notify(text=result)
+    # return requests.post(url, headers=reply_headers, data=json.dumps(reply_data))
 
     # reply_request = requests.post(
     #     MM_API_ADDRESS,

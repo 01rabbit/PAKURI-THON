@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "57cbb92ce20b8f44a613367e3bd3af3f8f091875b699b71a7923a2ca57625dc3"
+            "sha256": "de2cb43830d075eb422190140cb95c47964cf9fea35f90c5218b03f1848ad241"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -599,6 +599,13 @@
             ],
             "index": "pypi",
             "version": "==1.16.0"
+        },
+        "slackweb": {
+            "hashes": [
+                "sha256:bb64f1f8fea99fc04ce8fb300a09aab8fe51d86e25cedafb1eaca07f7b828c36"
+            ],
+            "index": "pypi",
+            "version": "==1.0.5"
         },
         "sqlalchemy": {
             "hashes": [
