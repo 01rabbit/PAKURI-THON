@@ -1,8 +1,6 @@
 import time
 import subprocess
 import db_controller as db
-import ChatController as cc
-import Communicator as comm
 import MatterController as mc
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
@@ -19,8 +17,13 @@ def Set_myjob(command, commander):
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     arg = (command, commander, status, time)
     job_id = db.insert_db(sql, arg)
-    msg = "[+] Adding: ID:{}  Commander:{}  Command:{}".format(job_id, commander, command)
-    mc.botbot_information(commander, msg)
+    attachment = {
+        "mrkdwn_in": ["text"],
+        "title": "Added order",
+        "pretext": "I added your order",
+        "text": f"@{commander} Your order is accepted.\n" + " JobID:{}\n Command:{}".format(job_id, command)
+    }
+    mc.botbot_information(attachment)
 
 def Run_command(job):
     job_id, command, commander, token = job
@@ -39,10 +42,15 @@ def Run_myjob(joblist):
 
     for job in joblist:
         job_id, command, commander, token = job
-        msg = "[+] Running: ID:{}  Commander:{}  Command:{}".format(job_id, commander, command)
         # chat message send
-        cc.NextcloudTalkSendInformation(msg)
-        print(msg)
+        attachment = {
+            "mrkdwn_in": ["text"],
+            "fallback": f"@{commander} Processing start. JobID:{job_id}",
+            "title": "Processing start",
+            "pretext": "Processing began as ordered.",
+            "text": f"@{commander} Ordered processing has been started.\n" + " JobID:{}\n Command:{}".format(job_id, command)
+        }
+        mc.botbot_information(attachment)
         time.sleep(1)
         future = executer.submit(Run_command, job)
         futures.append(future)
@@ -54,15 +62,27 @@ def Run_myjob(joblist):
             for future in futures:
                 if future.done():
                     out, err, job_id, command, commander, token = future.result()
-                    print("[+] Done: Job_ID: {}".format(job_id))
                     if len(out) != 0:
-                        print("[+] Output: {}".format(out))
-                    if len(err) != 0:
-                        print("[+] Error: {}".format(err))
-                    print("[+] Done: Commander:{}  Command: {}".format(commander, command))
-                    cc.NextcloudTalkSendInformation("[+] Done: Job_ID: {}".format(job_id))
-                    cc.NextcloudTalkSendInformation("[+] Done: Commander:{}  Command: {}".format(commander, command))
-                    comm.ChatSendMessage(token, commander, "Done: Job_ID: {} Command: {}".format(job_id, command))
+                        attachment = {
+                            "mrkdwn_in": ["text"],
+                            "fallback": f"@{commander} Done. JobID:{job_id}",
+                            "title": f"Done. JobID:{job_id}",
+                            "pretext": "Process is finished.",
+                            "text": f"@{commander} The process was successfully completed.\n" + \
+                                " JobID:{}\n Command:{}".format(job_id, command) + \
+                                "\n\n" + out.decode("utf-8")
+                        }
+                    elif len(err) != 0:
+                        attachment = {
+                            "mrkdwn_in": ["text"],
+                            "fallback": f"@{commander} Error. JobID:{job_id}",
+                            "title": f"Error. JobID:{job_id}",
+                            "pretext": "Processing has failed.",
+                            "text": f"@{commander} The process was failed.\n" + \
+                                " JobID:{}\n Command:{}".format(job_id, command) + \
+                                "\n\n" + err.decode("utf-8")
+                        }
+                    mc.botbot_information(attachment)
                     sql = """UPDATE t_job_list SET status=%s, timestamp=%s WHERE id= %s;"""
                     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     args = ("done", timestamp, job_id)

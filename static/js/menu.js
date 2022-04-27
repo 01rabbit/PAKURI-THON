@@ -15,7 +15,6 @@ container.addEventListener("click", () => {
         document.getElementsByClassName("item")[4].classList.add("five");
         document.getElementsByClassName("item")[5].classList.add("six");
         document.getElementsByClassName("item")[6].classList.add("seven");
-        document.getElementsByClassName("item")[7].classList.add("eight");
 
         show = false;
     } else {
@@ -29,7 +28,6 @@ container.addEventListener("click", () => {
         document.getElementsByClassName("item")[4].classList.remove("five");
         document.getElementsByClassName("item")[5].classList.remove("six");
         document.getElementsByClassName("item")[6].classList.remove("seven");
-        document.getElementsByClassName("item")[7].classList.remove("eight");
 
         show = true;
     }
