@@ -18,13 +18,9 @@
             <img src="{{ url_for('static',filename='images/cmd.png') }}" style="display: block; margin: auto;" alt="">
             <h3 style="text-align:center">Terminal</h3>
         </a>
-        <a class="item1" href="http://{{ myip }}:8080/apps/spreed/" target="_blank" rel="noopener noreferrer" role="button">
+        <a class="item1" href="http://{{ myip }}:8065" target="_blank" rel="noopener noreferrer" role="button">
             <img src="{{ url_for('static',filename='images/chat.png') }}" style="display: block; margin: auto;" alt="">
             <h3 style="text-align:center">Chat</h3>
-        </a>
-        <a class="item1" href="http://{{ myip }}:8080/apps/files/" target="_blank" rel="noopener noreferrer" role="button">
-            <img src="{{ url_for('static',filename='images/storage.png') }}" style="display: block; margin: auto;" alt="">
-            <h3 style="text-align:center">Storage</h3>
         </a>
         <a class="item1" href="{{ url_for('task') }}" role="button">
             <img src="{{ url_for('static',filename='images/task.png') }}" style="display: block; margin: auto;" alt="">
