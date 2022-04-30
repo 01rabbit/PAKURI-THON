@@ -19,7 +19,7 @@ def Set_myjob(command, commander):
     job_id = db.insert_db(sql, arg)
     attachment = {
         "mrkdwn_in": ["text"],
-        "title": "Added order",
+        "title": "Added order JobID:{}".format(job_id),
         "pretext": "I added your order",
         "text": f"@{commander} Your order is accepted.\n" + " JobID:{}\n Command:{}".format(job_id, command)
     }
@@ -45,8 +45,8 @@ def Run_myjob(joblist):
         # chat message send
         attachment = {
             "mrkdwn_in": ["text"],
-            "fallback": f"@{commander} Processing start. JobID:{job_id}",
-            "title": "Processing start",
+            "fallback": f"@{commander} Processing start.",
+            "title": "Start JobID:{}".format(job_id),
             "pretext": "Processing began as ordered.",
             "text": f"@{commander} Ordered processing has been started.\n" + " JobID:{}\n Command:{}".format(job_id, command)
         }
@@ -65,7 +65,7 @@ def Run_myjob(joblist):
                     if len(out) != 0:
                         attachment = {
                             "mrkdwn_in": ["text"],
-                            "fallback": f"@{commander} Done. JobID:{job_id}",
+                            "fallback": f"@{commander} Done.",
                             "title": f"Done. JobID:{job_id}",
                             "pretext": "Process is finished.",
                             "text": f"@{commander} The process was successfully completed.\n" + \

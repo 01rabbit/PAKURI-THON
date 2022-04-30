@@ -26,7 +26,7 @@ else
     exit 1
 fi
 date
-printf "Step 1/10 : Checking for root access... "
+printf "Step 1 : Checking for root access... "
 if [ "$EUID" -ne 0 ]; then
     printf "${RED_b}Failed${NC}\n"
     printf "Please run as ${RED_b}root${NC}\n"
@@ -35,7 +35,7 @@ else
     printf "${GREEN_b}OK${NC}\n"
 fi
 
-printf "Step 2/10 : Checking for internet connection... "
+printf "Step 2 : Checking for internet connection... "
 if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
     printf "${GREEN_b}OK${NC}\n"
 else
@@ -44,8 +44,8 @@ else
     exit 1
 fi
 echo ""
-echo "Step 3/10 : Creating service.ini..."
-echo "Enter the IP address of your server:"
+echo "Step 3 : Creating service.ini..."
+echo "Step 3-1 : Enter the IP address of your server:"
 read -p "IPAddress: " IP
 echo ""
 cat <<EOF > service.ini
@@ -58,7 +58,7 @@ database = pakuri
 [webssh]
 EOF
 echo ""
-echo "Step 5/10 : SSH login information..."
+echo "Step 3-2 : SSH login information..."
 echo "Enter the username and password for ssh login."
 read -p "USERNAME: " USERNAME
 read -sp "PASSWORD: " PASSWORD
@@ -73,9 +73,11 @@ password = password123
 server = https://$IP:1337
 listener = pakuri
 port = 8088
+[mattermost]
+webhooks = http://$IP:8065/hooks/[Create webhooks token]
 EOF
 
-printf "Step 6/10 : Checking that Docker is installed... "
+printf "Step 4 : Checking that Docker is installed... "
 docker --version &> /dev/null
 if [ $? -eq 0 ]; then
     printf "${GREEN_b}OK${NC}\n"
@@ -90,9 +92,9 @@ else
     systemctl enable docker
 fi
 
-echo "Step 7/10 : Docker content is being installed..."
+echo "Step 5 : Docker content is being installed..."
 cd docker
-printf "WebSSH... "
+printf "Step 5-1 : WebSSH... "
 docker-compose -f webssh/docker-compose.yml ps &> /dev/null
 if [ $? -eq 0 ]; then
     cd webssh
@@ -106,8 +108,7 @@ else
 fi
 cd ..
 
-# Test Mattermost
-printf "Step 8/10 : Testing Mattermost... "
+printf "Step 5-2 : Mattermost... "
 docker-compose -f mattermost-docker/docker-compose.yml ps &> /dev/null
 if [ $? -eq 0 ]; then
     cd mattermost-docker
@@ -118,17 +119,68 @@ else
     cd mattermost-docker
     mkdir -pv ./volumes/app/mattermost/{data,logs,config,plugins,client-plugins}
     chown -R 2000:2000 ./volumes/app/mattermost/
+    cat <<EOF > ./docker-compose.yml
+version: "3"
+
+services:
+
+  db:
+    build: db
+    read_only: true
+    restart: unless-stopped
+    volumes:
+      - ./volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_USER=mmuser
+      - POSTGRES_PASSWORD=mmuser_password
+      - POSTGRES_DB=mattermost
+
+  app:
+    build:
+      context: app
+      args:
+        - edition=team
+    restart: unless-stopped
+    volumes:
+      - ./volumes/app/mattermost/config:/mattermost/config:rw
+      - ./volumes/app/mattermost/data:/mattermost/data:rw
+      - ./volumes/app/mattermost/logs:/mattermost/logs:rw
+      - ./volumes/app/mattermost/plugins:/mattermost/plugins:rw
+      - ./volumes/app/mattermost/client-plugins:/mattermost/client/plugins:rw
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MM_USERNAME=mmuser
+      - MM_PASSWORD=mmuser_password
+      - MM_DBNAME=mattermost
+
+      - MM_SQLSETTINGS_DATASOURCE=postgres://mmuser:mmuser_password@db:5432/mattermost?sslmode=disable&connect_timeout=10
+
+
+  web:
+    build: web
+    ports:
+      - "8065:8080"
+      - "443:8443"
+    read_only: true
+    restart: unless-stopped
+    volumes:
+      - ./volumes/web/cert:/cert:ro
+      - /etc/localtime:/etc/localtime:ro
+    cap_drop:
+      - ALL
+EOF
     docker-compose up -d
     printf "${GREEN_b}Installed${NC}\n"
 fi
 
-printf "Step 9/10 : PostgreSQL... "
+printf "Step 5-3 : PostgreSQL... "
 cd postgres
 docker-compose up -d
 printf "${GREEN_b}OK${NC}\n"
 cd ../../
 
-printf "Step 10/10 : Set up the environment..."
+printf "Step 6 : Set up the environment..."
 apt install pipenv -y
 apt install libpq-dev -y
 pipenv sync
@@ -136,5 +188,6 @@ printf "${GREEN_b}OK${NC}\n"
 
 echo "Instll complete!"
 
-echo "Please accsess http://$IP:8080 with a web browser to complete the Nextcloud configuration."
+echo "Complete the Mattermost setup by visiting http://$IP:8065 in your web browser.\n\
+After registering an administrator, create a Bot account, Incoming Webhooks, and Outgoing Webhooks."
 printf "When you are finished, type ${RED_b}sudo ./pkr3.sh${NC} to start PAKURI-THON.\n"

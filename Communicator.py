@@ -4,9 +4,11 @@ import db_controller as db
 import JobController as jc
 import MatterController as mc
 
+# 現在時刻の把握
 def get_timestamp():
     return datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 
+# Cmd向けHELP
 def cmd_i_dont_know(user,cmd):
     attachment = {
                 "mrkdwn_in": ["text"],
@@ -14,11 +16,12 @@ def cmd_i_dont_know(user,cmd):
             }
     return attachment
 
+
 def cmd_howto(user,cmd):
     attachment = {
-                    "mrkdwn_in": ["text"],
-                    "color": "#ffa500",
-                    "text": f"@{user} If you want me to use {cmd}, please enter it in the following format." + "\n \
+        "mrkdwn_in": ["text"],
+        "color": "#917c50",
+        "text": f"@{user} If you want me to use {cmd}, please enter it in the following format." + "\n \
 ***Be careful to separate the commands with a space.***\n\
 `nmap [Command Type] [Target IP Address]`\n\n\
 ### Command Type",
@@ -28,8 +31,17 @@ def cmd_howto(user,cmd):
     attachfield = []
     for selectCmd in cmdList:
         attachfield.append({"title": selectCmd[0],"value": selectCmd[1],"short": "false"},)
-    attachment["fields"] = attachfield
+        attachment["fields"] = attachfield
+    return attachment
 
+def help_me():
+    attachment = {
+        "mrkdwn_in": ["text"],
+        "color": "#9a1117",
+        "text": "Need help?\n\ I am #P.i.t.to. controlling this system.\n\
+If you want an nmap scan, please chat with `#pitto nmap help` first.\n\
+Or if you want a nikto scan, please chat with #pitto nikto help` first."
+}
     return attachment
 
 def ChatCommunication():
@@ -47,6 +59,8 @@ def ChatCommunication():
         attachment = {"mrkdwn_in": ["text"], "text": f"Hi, @{posted_user} ! :wave:" }
     elif command == "hi" or command == "Hi":
         attachment = {"mrkdwn_in": ["text"], "text": f"Hello, @{posted_user} ! :wave:" }
+    elif command == "help":
+        attachment = help_me()
 
     # nmap or nikto
     elif command == "nmap" or command == "nikto":
@@ -94,7 +108,7 @@ def ChatCommunication():
         attachment = {
             "markdwn_in": ["text","pretext"],
             "pretext" : pretext,
-            "color": "#ff0000",
+            "color": "#9a1117",
             "text": "If you have any questions, please type `help`. :thumbsup:"
         }
     
