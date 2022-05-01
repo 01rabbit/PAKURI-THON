@@ -76,6 +76,7 @@ port = 8088
 [mattermost]
 webhooks = http://$IP:8065/hooks/[Create webhooks token]
 EOF
+chmod +wr service.ini
 
 printf "Step 4 : Checking that Docker is installed... "
 docker --version &> /dev/null
