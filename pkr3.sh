@@ -34,15 +34,6 @@ fi
 printf "Checking docker startup... "
 if systemctl status docker.service | grep "active (running)" > /dev/null; then
     printf "${GREEN_b}OK${NC}\n"
-    printf "Checking for postgres..."
-    if docker-compose -f docker/postgres/docker-compose.yml ps | grep Up > /dev/null; then
-        printf "${GREEN_b}OK${NC}\n"
-    else
-        printf "${RED_b}Failed${NC}\n"
-        docker-compose -f docker/postgres/docker-compose.yml start
-        echo "Start Postgres. Restat this script."
-        exit 1
-    fi
     printf "Checking for SSH Service..."
     if systemctl status ssh.service | grep "active (running)" > /dev/null; then
         printf "${GREEN_b}OK${NC}\n"
@@ -59,6 +50,24 @@ if systemctl status docker.service | grep "active (running)" > /dev/null; then
         printf "${RED_b}Failed${NC}\n"
         docker-compose -f docker/webssh/docker-compose.yml start
         echo "Start WebSSH. Restart this script."
+        exit 1
+    fi
+    printf "Checking for postgres..."
+    if docker-compose -f docker/postgres/docker-compose.yml ps | grep Up > /dev/null; then
+        printf "${GREEN_b}OK${NC}\n"
+    else
+        printf "${RED_b}Failed${NC}\n"
+        docker-compose -f docker/postgres/docker-compose.yml start
+        echo "Start Postgres. Restat this script."
+        exit 1
+    fi
+    printf "Checking for Mattermost..."
+    if docker-compose -f docker/mattermost-docker/docker-compose.yml ps | grep Up > /dev/null; then
+        printf "${GREEN_b}OK${NC}\n"
+    else
+        printf "${RED_b}Failed${NC}\n"
+        docker-compose -f docker/mattermost-docker/docker-compose.yml start
+        echo "Start Mattermost. Restart this script."
         exit 1
     fi
 else
