@@ -40,5 +40,6 @@ webssh = "==1.5.3"
 update = "*"
 werkzeug = "*"
 slackweb = "*"
+ipaddress = "*"
 
 [dev-packages]

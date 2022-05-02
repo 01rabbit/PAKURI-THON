@@ -81,8 +81,8 @@ def scan_menu():
 def scan_nmap():
     if request.method == 'POST':
         command = request.form.get('setCommand')
-        filename = request.form.get('setFilename') + ".xml"
-        command = command + " && python xmlparser.py "+ app.config['UPLOAD_FOLDER'] +"/" + filename
+        filename = f"{request.form.get('setFilename')}.xml"
+        command = f"{command} && python xmlparser.py {app.config['UPLOAD_FOLDER']}/{filename}"
         jc.Set_myjob(command, COMMANDER, "")
         return redirect(url_for('scan_nmap'))
     else:
@@ -101,7 +101,7 @@ def scan_nikto():
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename')
-        command = command + " && python xmlparser.py tmp/" + filename 
+        command = f"{command} && python xmlparser.py tmp/{filename}"
         jc.Set_myjob(command, COMMANDER, "")
         return redirect(url_for('scan_nikto'))
     else:

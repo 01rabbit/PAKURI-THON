@@ -1,3 +1,5 @@
+import glob
+import os
 import sys
 import xml.etree.ElementTree as ET
 import argparse
@@ -196,16 +198,28 @@ def parse_nikto_xml(root):
 
 if __name__ == "__main__":
     try:
-        # scanfile = "test.xml"
-        scanfile = parseArgs()
-        tree = createTree(scanfile)
-        if tree.tag == "nmaprun":
-            parse_nmap_xml(tree)
-        elif tree.tag == "niktoscan":
-            parse_nikto_xml(tree)
+        # scanfile = parseArgs()
+        scanfile = "tmp/127.0.0.1/scans/xml/"
+        if os.path.isfile(scanfile):
+            tree = createTree(scanfile)
+            if tree.tag == "nmaprun":
+                parse_nmap_xml(tree)
+            elif tree.tag == "niktoscan":
+                parse_nikto_xml(tree)
+            else:
+                print("Unknown file format")
+                sys.exit(2)
         else:
-            print("Unknown file format")
-            sys.exit(2)
+            xmlfiles = glob.glob(scanfile+"*.xml")
+            for xml in xmlfiles:
+                tree = createTree(xml)
+                if tree.tag == "nmaprun":
+                    parse_nmap_xml(tree)
+                elif tree.tag == "niktoscan":
+                    parse_nikto_xml(tree)
+                else:
+                    print("Unknown file format")
+                    sys.exit(2)
     except:
         sys.exit(2)
     attachment = {

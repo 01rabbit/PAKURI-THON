@@ -16,17 +16,5 @@ INSERT INTO t_command_list (cmd_name,value,cmd_type,description) VALUES
     ('Regular_scan','nmap','nmap','Normal Nmap scan. Run a regular Nmap against the target.'),
     ('Vuln_scan', 'nmap -Pn -sV --script vuln', 'nmap', 'Use Nmap''s script to probe for vulnerabilities.'),
     ('Vuln_scan_All_TCP', 'nmap -Pn -sV -p- --script vuln', 'nmap', 'Use Nmap''s script to probe for vulnerabilities. All TCP Ports.'),
-    ('Slow_comprehensive_scan','nmap -sS -sU -T4 -A -v -PE -PP -PS80,443 -PA3389 -PU40125 -PY -g 53 --script "default or (discovery and safe)"','nmap','Perform a slow but extensive scan. Specifically.
-    Perform a SYN scan (-sS) and a UDP scan (-sU).
-    Speed up the scan timing (-T4)
-    Enable OS detection, version detection, script scanning, and traceroute (-A)
-    Improve the display of detailed information (-v)
-    Perform detection using ICMP Echo request (-PE)
-    Perform detection using ICMP timestamp request (-PP)
-    Specify the port for SYN scan (-PS80, 443)
-    Specifies the port for ACK scan (-PA3389).
-    Specify the port for UDP scan (-PU40125).
-    Perform SCTP scan (-PY)
-    Specify the source port (-g 53)
-    Specify the source port (-g 53) Execute scripts belonging to the default category or the discovery and safe categories.
-    Execute scripts belonging to the default category or the discovery and safe categories (--script default or (discovery and safe))');
+    ('Slow_comprehensive_scan','nmap -sS -sU -T4 -A -v -PE -PP -PS80,443 -PA3389 -PU40125 -PY -g 53 --script "default or (discovery and safe)"','nmap','Perform a slow but extensive scan. Specifically. Perform a SYN scan (-sS) and a UDP scan (-sU). Speed up the scan timing (-T4). Enable OS detection, version detection, script scanning, and traceroute (-A). Improve the display of detailed information (-v). Perform detection using ICMP Echo request (-PE). Perform detection using ICMP timestamp request (-PP). Specify the port for SYN scan (-PS80, 443). Specifies the port for ACK scan (-PA3389). Specify the port for UDP scan (-PU40125). Perform SCTP scan (-PY). Specify the source port (-g 53). Specify the source port (-g 53) Execute scripts belonging to the default category or the discovery and safe categories. Execute scripts belonging to the default category or the discovery and safe categories (--script default or (discovery and safe))'),
+    ('AutoRecon','python3 ~/PAKURI-THON/tools/AutoRecon/autorecon.py --output tmp/ --only-scans-dir --no-port-dir','tools','Automatically perform recon on a target');

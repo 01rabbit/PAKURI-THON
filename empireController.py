@@ -16,7 +16,7 @@ def getEmpireToken():
         }
     payload = json.dumps(data)
     baseEndPoint = "/api/admin/login"
-    url = args['server'] + baseEndPoint
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.post(url, headers=HEADERS, data=payload, verify=False)
     result = response.json()
     try:
@@ -36,7 +36,7 @@ def createHTTPListener(token, listener, port):
         }
     payload = json.dumps(data)
     baseEndPoint = "/api/listeners/http"
-    url = args['server'] + baseEndPoint
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.post(url, headers=HEADERS, params=params, data=payload, verify=False)
     result = response.json()
     try:
@@ -53,7 +53,7 @@ def getAllStager(token):
     args = config()
     params = (('token', token),)
     baseEndPoint = "/api/stagers"
-    url = args['server'] + baseEndPoint
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.get(url, params=params, verify=False)
     result = response.json()
     stagerlists = []
@@ -69,8 +69,8 @@ def getAllStager(token):
 def getCurrentListeners(token,listener):
     args = config()
     params = (('token', token),)
-    baseEndPoint = "/api/listeners/" + listener
-    url = args['server'] + baseEndPoint
+    baseEndPoint = f"/api/listeners/{listener}"
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.get(url, params=params, verify=False)
     result = response.json()
     listenrers = []
@@ -90,8 +90,8 @@ def getCurrentListeners(token,listener):
 def killListener(token, listener):
     args = config()
     params = (('token', token),)
-    baseEndPoint = "/api/listeners/" + listener
-    url = args['server'] + baseEndPoint
+    baseEndPoint = f"/api/listeners/{listener}"
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.delete(url, params=params, verify=False)
     result = response.json()
     try:
@@ -107,7 +107,7 @@ def generateStager(token, stagerName, listener):
     args = config()
     params = (('token', token),)
     baseEndPoint = "/api/stagers"
-    url = args['server'] + baseEndPoint
+    url = f"{args['server']}{baseEndPoint}"
     data = {
         "StagerName":stagerName,
         "Listener":listener
@@ -133,7 +133,7 @@ def getCurrentAgents(token):
     args = config()
     params = (('token', token),)
     baseEndPoint = "/api/agents"
-    url = args['server'] + baseEndPoint
+    url = f"{args['server']}{baseEndPoint}"
     response = requests.get(url, params=params, verify=False)
     result = response.json()
     agents = []
