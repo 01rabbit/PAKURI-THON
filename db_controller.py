@@ -1,7 +1,27 @@
 import psycopg2
+import os
+import configparser
+import sys
 from config import db_conf as config
 
 
+class db_controller:
+    def __init__(self):
+        # Read config.ini
+        path = os.path.dirname(os.path.abspath(__file__))
+        config = configparser.ConfigParser()
+        try:
+            config.read(os.path.join(path, 'config.ini'))
+        except FileExistsError:
+            sys.exit('config.ini not found')
+        
+        DB_HOST = config['postgresql']['host']
+        DB_PORT = int(config['postgresql']['port'])
+        DB_USER = config['postgresql']['user']
+        DB_PASS = config['postgresql']['password']
+        DB_NAME = config['postgresql']['database']
+        self.conn = psycopg2.connect(host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASS, database=DB_NAME)
+        
 def insert_db(sql,arg):
     conn = None
     value = None
