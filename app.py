@@ -2,13 +2,15 @@ import datetime
 import os
 import subprocess
 from subprocess import PIPE
-import db_controller as db
+# import db_controller as db
 import JobController as jc
 import Communicator as com
 import empireController as ec
 import netifaces as ni
-from config import webssh_conf as sshconfig
-from config import empire_conf as empireconfig
+import config
+import pkr_Interface as pkr
+# from config import webssh_conf as sshconfig
+# from config import empire_conf as empireconfig
 from flask import Flask, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
@@ -79,6 +81,7 @@ def scan_menu():
 
 @app.route('/scan_nmap', methods=['GET','POST'])
 def scan_nmap():
+    db = pkr.db_controller()
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = f"{request.form.get('setFilename')}.xml"
@@ -98,6 +101,7 @@ def scan_nmap():
 
 @app.route('/scan_nikto', methods=['GET', 'POST'])
 def scan_nikto():
+    db = pkr.db_controller()
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename')
@@ -116,6 +120,7 @@ def scan_nikto():
 
 @app.route('/hostlist', methods=['GET'])
 def hostlist():
+    db = pkr.db_controller()
     sql = """SELECT * FROM t_host_list;"""
     hosts = db.get_AllValues(sql, "")
     sql = """
@@ -132,6 +137,7 @@ def hostlist():
 
 @app.route('/hostdetail/<int:id>', methods=['GET', 'POST'])
 def hostdetail(id):
+    db = pkr.db_controller()
     if request.method == 'POST':
         ostype = str(request.form.get("ostype"))
         name = request.form.get("name")
@@ -148,6 +154,7 @@ def hostdetail(id):
 
 @app.route('/portdetail/<int:id>', methods=['GET', 'POST'])
 def portdetail(id):
+    db = pkr.db_controller()
     sql = """SELECT * FROM t_port_list WHERE id = %s;"""
     ports = db.get_AllValues(sql, id)
     
@@ -195,11 +202,12 @@ def terminal():
     myip = get_ip_address()
     cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
     console_flg = process_action(cmd)
-    params = sshconfig()
+    params = config.webssh_conf()
     return render_template('terminal.html', myip=myip, console_flg=console_flg,username=params['username'],password=params['password'])
 
 @app.route('/task')
 def task():
+    db = pkr.db_controller()
     sql = """SELECT * FROM t_job_list;"""
     jobs = db.get_AllValues(sql, "")
     return render_template('task.html', jobs=jobs)
@@ -214,7 +222,7 @@ def empire_home():
         token = request.form.get('token')
         return redirect(url_for('empire_home', token=token))
     else:
-        params = empireconfig()
+        params = config.empire_conf()
         token = ec.getEmpireToken()
         agents = ec.getCurrentAgents(token)
         if agents[0][0] == '':
@@ -258,7 +266,8 @@ def empire_agent():
 
 @app.route('/bot', methods=['POST'])
 def bot_replay():
-    com.ChatCommunication()
+    comm = com.Communicator()
+    comm.ChatCommunication()
     return
 
 

@@ -44,11 +44,11 @@ else
     exit 1
 fi
 echo ""
-echo "Step 3 : Creating service.ini..."
+echo "Step 3 : Creating config.ini..."
 echo "Step 3-1 : Enter the IP address of your server:"
 read -p "IPAddress: " IP
 echo ""
-cat <<EOF > service.ini
+cat <<EOF > config.ini
 [postgresql]
 user = root
 password = password
@@ -64,7 +64,7 @@ read -p "USERNAME: " USERNAME
 read -sp "PASSWORD: " PASSWORD
 ENCPASS=`echo -n $PASSWORD|base64`
 echo ""
-cat <<EOF >> service.ini
+cat <<EOF >> config.ini
 username = $USERNAME
 password = $ENCPASS
 [empire]
@@ -76,7 +76,7 @@ port = 8088
 [mattermost]
 webhooks = http://$IP:8065/hooks/[Create webhooks token]
 EOF
-chmod +wr service.ini
+chmod +wr config.ini
 
 printf "Step 4 : Checking that Docker is installed... "
 docker --version &> /dev/null
@@ -181,7 +181,16 @@ docker-compose up -d
 printf "${GREEN_b}OK${NC}\n"
 cd ../../
 
-printf "Step 6 : Set up the environment..."
+printf "Step 6 : Useful Tools is being installed... "
+printf "Step 6-1 : AutoRecon... "
+cd tools/
+git clone https://github.com/Tib3rius/AutoRecon.git
+cd AutoRecon/
+python3 -m pip install -r requirements.txt
+printf "${GREEN_b}OK${NC}\n"
+
+
+printf "Step 7 : Set up the environment..."
 apt install pipenv -y
 apt install libpq-dev -y
 pipenv sync
