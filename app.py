@@ -2,15 +2,12 @@ import datetime
 import os
 import subprocess
 from subprocess import PIPE
-# import db_controller as db
 import JobController as jc
 import Communicator as com
 import empireController as ec
 import netifaces as ni
 import config
 import pkr_Interface as pkr
-# from config import webssh_conf as sshconfig
-# from config import empire_conf as empireconfig
 from flask import Flask, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
