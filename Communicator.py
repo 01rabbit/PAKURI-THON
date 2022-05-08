@@ -51,11 +51,9 @@ class Communicator:
     ***Be careful to separate the commands with a space.***\n"
         }
         if cmd == "nikto":
-            attachment["text"] += "\n\n##### Example\n\
-    `#pitto nikto [Command Type] [Target IP Address]` or `#pitto nikto [Target URL]`"
+            attachment["text"] += "\n\n##### Example\n`#pitto nikto [Command Type] [Target IP Address]` or `#pitto nikto [Target URL]`"
         elif cmd == "nmap":
-            attachment["text"] += f"\n\n##### Example\n\
-    `#pitto {cmd} [Command Type] [Target IP Address]`"
+            attachment["text"] += f"\n\n##### Example\n`#pitto {cmd} [Command Type] [Target IP Address]`"
 
         attachment["text"] += f"\n\n##### Command Type\n"
         sql = """SELECT cmd_name,description FROM t_command_list WHERE cmd_type = %s;"""

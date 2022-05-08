@@ -15,6 +15,9 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = 'tmp'
 ALLOWED_EXTENSIONS = {'xml','txt'}
 COMMANDER = "PAKURI-THON"
+CONFIG_FILE= "config.ini"
+DBNAME = "postgresql"
+WEBSSH = "webssh"
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -199,7 +202,7 @@ def terminal():
     myip = get_ip_address()
     cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
     console_flg = process_action(cmd)
-    params = config.webssh_conf()
+    params = config(CONFIG_FILE,WEBSSH)
     return render_template('terminal.html', myip=myip, console_flg=console_flg,username=params['username'],password=params['password'])
 
 @app.route('/task')
@@ -215,13 +218,13 @@ def tools():
 
 @app.route('/empire_home',methods=['GET','POST'])
 def empire_home():
+    empire = ec.EmpireController()
     if request.method == 'POST':
         token = request.form.get('token')
         return redirect(url_for('empire_home', token=token))
     else:
-        params = config.empire_conf()
-        token = ec.getEmpireToken()
-        agents = ec.getCurrentAgents(token)
+        token = empire.getEmpireToken()
+        agents = empire.getCurrentAgents(token)
         if agents[0][0] == '':
             i = 0
         else:
@@ -229,12 +232,12 @@ def empire_home():
         if token == '':
             return render_template(url_for('empire_home'))
         else:
-            stagers = ec.getAllStager(token)
-            listeners = ec.getCurrentListeners(token,params['listener'])
+            stagers = empire.getAllStager(token)
+            listeners = empire.getCurrentListeners(token)
             if listeners[0][0] == '':
-                flg = ec.createHTTPListener(token, params['listener'], params['port'])
+                flg = empire.createHTTPListener(token)
                 if flg:
-                    listeners = ec.getCurrentListeners(token,params['listener'])
+                    listeners = empire.getCurrentListeners(token)
                 else:
                     listeners = ['','']
             
@@ -242,18 +245,20 @@ def empire_home():
 
 @app.route('/empire_stager',methods=['POST'])
 def empire_stager():
-    token = ec.getEmpireToken()
+    empire = ec.EmpireController()
+    token = empire.getEmpireToken()
     stagers = request.form.get('setStager')
     listener = request.form.get('setListener')
-    createStagers = ec.generateStager(token,stagers,listener)
+    createStagers = empire.generateStager(token,stagers,listener)
     output = createStagers[0][0]
     outfile = createStagers[0][1]
     return render_template('empire_stager.html', listener=listener, stagers=stagers, output=output, outfile=outfile)
 
 @app.route('/empire_agent')
 def empire_agent():
-    token = ec.getEmpireToken()
-    agents = ec.getCurrentAgents(token)
+    empire = ec.EmpireController()
+    token = empire.getEmpireToken()
+    agents = empire.getCurrentAgents(token)
     if agents[0][0] == '':
         i = 0
     else:
