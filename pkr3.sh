@@ -106,7 +106,13 @@ if [ -z ${TMUX} ];then
     tmux send-keys -t "pakuri_session:main.1" "python watchDog.py" C-m
     printf ">"
     sleep 1
-    tmux send-keys -t "pakuri_session:main.2" "powershell-empire server --username empireadmin --password password123" C-m
+    # iniファイルの読み込み
+    declare -r INI_FILE="config.ini"
+    # sectionの指定
+    declare -r SECTION="empire"
+    # ... = ...形式の行を抽出してsourceに格納
+    source <(sed -n -E '/^\],'${SECTION}'\]/,/^\[\S+\]/s/^\s*(\S+)\s*=\s*(.+)$/\1=\2/p' <"${INI_FILE}")
+    tmux send-keys -t "pakuri_session:main.2" "powershell-empire --teamserver --username $username --password $password" C-m
     printf "> ${GREEN_b}done!${NC}\n"
     sleep 1
     tmux -2 attach-session -t "pakuri_session".2

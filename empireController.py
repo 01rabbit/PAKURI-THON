@@ -8,7 +8,7 @@ import config
 
 class EmpireController:
     def __init__(self):
-        self.HEADERS = {'Content-Type': 'application/json',}
+        self.header = {'Content-Type': 'application/json',}
         self.args = config.empire_conf()
 
 
@@ -20,7 +20,7 @@ class EmpireController:
         payload = json.dumps(data)
         baseEndPoint = "/api/admin/login"
         url = f"{self.args['server']}{baseEndPoint}"
-        response = requests.post(url, headers=self.HEADERS, data=payload, verify=False)
+        response = requests.post(url, headers=self.header, data=payload, verify=False)
         result = response.json()
         try:
             if result['token']:
@@ -33,13 +33,13 @@ class EmpireController:
     def createHTTPListener(self, token):
         params = (('token', token),)
         data = {
-            "Name":self.args['listenerName'],
+            "Name":self.args['listenername'],
             "Port":self.args['port']
             }
         payload = json.dumps(data)
         baseEndPoint = "/api/listeners/http"
         url = f"{self.args['server']}{baseEndPoint}"
-        response = requests.post(url, headers=self.HEADERS, params=params, data=payload, verify=False)
+        response = requests.post(url, headers=self.header, params=params, data=payload, verify=False)
         result = response.json()
         try:
             if result['success']:
@@ -67,9 +67,9 @@ class EmpireController:
         finally:
             return(stagerlists)
 
-    def getCurrentListeners(self,token):
+    def getCurrentListeners(self, token):
         params = (('token', token),)
-        baseEndPoint = f"/api/listeners/{self.args['listenerName']}"
+        baseEndPoint = f"/api/listeners/{self.args['listenername']}"
         url = f"{self.args['server']}{baseEndPoint}"
         response = requests.get(url, params=params, verify=False)
         result = response.json()
@@ -87,9 +87,9 @@ class EmpireController:
             listenrers.append([name,module,host,launcher])
             return(listenrers)
 
-    def killListener(self, token, listener):
+    def killListener(self, token):
         params = (('token', token),)
-        baseEndPoint = f"/api/listeners/{listener}"
+        baseEndPoint = f"/api/listeners/{self.args['listenername']}"
         url = f"{self.args['server']}{baseEndPoint}"
         response = requests.delete(url, params=params, verify=False)
         result = response.json()
@@ -102,16 +102,17 @@ class EmpireController:
         finally:
             return(value)
 
-    def generateStager(self, token, stagerName, listener):
+    def generateStager(self, token, stagerName):
         params = (('token', token),)
         baseEndPoint = "/api/stagers"
         url = f"{self.args['server']}{baseEndPoint}"
         data = {
             "StagerName":stagerName,
-            "Listener":listener
+            "Listener":self.args['listenername'],
+            "OutFile":"/tmp/test"
             }
         payload = json.dumps(data)
-        response = requests.post(url, headers=self.HEADERS, params=params, data=payload, verify=False)
+        response = requests.post(url, headers=self.header, params=params, data=payload, verify=False)
         result = response.json()
         stagers = []
         try:
@@ -120,11 +121,12 @@ class EmpireController:
                     outstr = base64.b64decode(result[stagerName]['Output']).decode()
                 except:
                     outstr = result[stagerName]['Output']
-                outfile = result[stagerName]['OutFile']['Value']
+
+                description = result[stagerName]['OutFile']['Description']
         except(KeyError):
-            outstr, outfile = '',''
+            outstr, description = '',''
         finally:
-            stagers.append([outstr,outfile])
+            stagers.append([outstr,description])
             return(stagers)
 
     def getCurrentAgents(self, token):

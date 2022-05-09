@@ -225,7 +225,7 @@ def empire_home():
     else:
         token = empire.getEmpireToken()
         agents = empire.getCurrentAgents(token)
-        if agents[0][0] == '':
+        if agents[0][0] == '' and len(agents) == 1:
             i = 0
         else:
             i = len(agents)
@@ -240,7 +240,6 @@ def empire_home():
                     listeners = empire.getCurrentListeners(token)
                 else:
                     listeners = ['','']
-            
             return render_template('empire_home.html', token=token, stagers=stagers, listeners=listeners[0], i=i)
 
 @app.route('/empire_stager',methods=['POST'])
@@ -249,10 +248,10 @@ def empire_stager():
     token = empire.getEmpireToken()
     stagers = request.form.get('setStager')
     listener = request.form.get('setListener')
-    createStagers = empire.generateStager(token,stagers,listener)
+    createStagers = empire.generateStager(token,stagers)
     output = createStagers[0][0]
-    outfile = createStagers[0][1]
-    return render_template('empire_stager.html', listener=listener, stagers=stagers, output=output, outfile=outfile)
+    description = createStagers[0][1]
+    return render_template('empire_stager.html', listener=listener, stagers=stagers, output=output, description=description)
 
 @app.route('/empire_agent')
 def empire_agent():

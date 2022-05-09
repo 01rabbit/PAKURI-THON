@@ -26,7 +26,10 @@
     </div>
     <br>
     <textarea id="generateCommand" rows="10" cols="100" class="form-control" readonly>{{ output }}</textarea>
-    <p>Output File Name(Default) : <input type="text" class="bg-dark border-dark text-white" value={{ outfile }} readonly></p>
+    <p>
+        <h4>Output File description : </h4>
+        <label>{{ description }}</label>
+    </p>
     <h4>Information : </h4>
     <p>Once you have copied the payload to the clipboard by pressing Copy, create a Stager file using the default file name as a reference.<p>
     <div class="container">
