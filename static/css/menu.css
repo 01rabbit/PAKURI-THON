@@ -4,6 +4,13 @@ body {
     width: 100vw;
 }
 
+@media screen and (max-width: 768px) {
+    .container1,
+    .menu1 {
+        display: none;
+    }
+}
+
 .container1 {
     height: 100px;
     width: 160px;
@@ -143,8 +150,4 @@ body {
 .eight {
     transform: translate(5px, -200px);
     /*Terminal*/
-}
-
-.fit-images {
-    width: 100%;
 }
