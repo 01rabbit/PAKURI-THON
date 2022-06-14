@@ -394,6 +394,9 @@ table.table.table-striped tbody tr td {
     .grid_hostlist {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
+    .item1 {
+        font-size: 0.3em;
+    }
 }
 
 @media screen and (min-width: 480px) and (max-width: 1024px) {
@@ -418,6 +421,7 @@ table.table.table-striped tbody tr td {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
+    overflow-wrap: break-word;
 }
 
 .item1:hover {
@@ -436,6 +440,36 @@ table.table.table-striped tbody tr td {
 
 .item1 p {
     text-align: left;
+}
+
+.grid_commandlist {
+    display: grid;
+    gap: 10px;
+}
+
+@media screen and (max-width: 480px) {
+    .grid_commandlist {
+        grid-auto-rows: 50px;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    .item1 {
+        font-size: 0.5em;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .grid_commandlist {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .item1 {
+        font-size: 0.7em;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .grid_commandlist {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
 }
 
 

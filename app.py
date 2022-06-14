@@ -2,7 +2,7 @@ import datetime
 import os
 import subprocess
 from subprocess import PIPE
-import JobController as jc
+import JobController as jobcon
 import Communicator as com
 import empireController as ec
 import netifaces as ni
@@ -56,6 +56,7 @@ def index():
 
 @app.route('/import', methods=['GET','POST'])
 def fileimport():
+    jc = jobcon.JobController()
     if request.method == 'POST':
         if 'uploadFile' not in request.files:
             return redirect(request.url)
@@ -82,6 +83,7 @@ def scan_menu():
 @app.route('/scan_nmap', methods=['GET','POST'])
 def scan_nmap():
     db = pkr.db_controller()
+    jc = jobcon.JobController()
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = f"{request.form.get('setFilename')}.xml"
@@ -102,6 +104,7 @@ def scan_nmap():
 @app.route('/scan_nikto', methods=['GET', 'POST'])
 def scan_nikto():
     db = pkr.db_controller()
+    jc = jobcon.JobController()
     if request.method == 'POST':
         command = request.form.get('setCommand')
         filename = request.form.get('setFilename')

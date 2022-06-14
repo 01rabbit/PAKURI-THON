@@ -6,6 +6,7 @@ import JobController as jc
 
 
 if __name__ == "__main__":
+    jc = jc.JobController()
     try:
         while True:
             print(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

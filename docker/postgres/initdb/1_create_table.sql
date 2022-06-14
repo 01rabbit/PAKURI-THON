@@ -2,6 +2,7 @@ CREATE TABLE t_command_list
 (
     id serial NOT NULL,
     cmd_name varchar NULL,
+    display_name varchar NULL,
     value varchar NULL,
     cmd_type varchar NULL,
     description text NULL,

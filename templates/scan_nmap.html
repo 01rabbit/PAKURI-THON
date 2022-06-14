@@ -57,7 +57,16 @@
                 {% endfor %}
         </select>
     </p>
-    <div class="container">
+    <h2>Host List</h2>
+    <div class="grid_commandlist">
+        {% for command in commands %}
+        <a class="item1" href="{{ url_for('index') }}" role="button">
+            {{ command[2] }}
+        </a>
+        {% endfor %}
+    </div>
+<hr>
+    <!--<div class="container">
         <table id="detail-table" class="table table-striped">
             <thead>
                 <tr>
@@ -76,7 +85,7 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
+    </div>-->
     <hr>
     <h5>Command:</h5>
     <input type="text" id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; height:3em; width:90%;" placeholder="Your Command of choice" value=""><br><br>
