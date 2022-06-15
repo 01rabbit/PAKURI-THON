@@ -403,6 +403,9 @@ table.table.table-striped tbody tr td {
     .grid_hostlist {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
+    .item1 {
+        font-size: 0.8em;
+    }
 }
 
 @media screen and (min-width: 1024px) {

@@ -98,7 +98,7 @@ def scan_nmap():
         nmap_list = db.get_AllValues(sql, "nmap")
         if request.args.get('setip') == 'Set':
             return redirect(url_for('scan_nmap', ip=ip))
-        return render_template('scan_nmap.html', hosts=hosts, scan_nmap=nmap_list, commands=nmap_list, ip=ip, myip=myip)
+        return render_template('scan_nmap.html', hosts=hosts, commands=nmap_list, ip=ip, myip=myip)
 
 
 @app.route('/scan_nikto', methods=['GET', 'POST'])

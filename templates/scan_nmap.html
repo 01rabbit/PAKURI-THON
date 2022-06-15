@@ -34,36 +34,40 @@
     <hr>
     <h2>Scanning -Nmap-</h2>
     <h3>Recipe</h3>
-    <P>
-        <strong><font size="3">Target: </font></strong>
-        <select id="hosts" class="bg-dark border-dark text-white">
-            {% if ip != "" %}
-                <option value={{ ip }}>{{ ip }}</option>
-            {% else %}
-                <option disabled selected>Select Target</option>
-            {% endif %}
-                <optgroup label="Other Hosts">
-                    {% for host in hosts %}
-                    <option value="{{ host[0] }}">{{ host[0] }}</option>
-                    {% endfor %}
-                </optgroup>
-        </select>
-        <strong><font size="3">Scan Profile: </font></strong>
-        <select id="scanOption" class="bg-dark border-dark text-white">
-            <option disabled selected value="0">Choice Scan Profile</option>
-            <optgroup label="Nmap Scan">
-                {% for scantype in scan_nmap %}
-                    <option value="{{ scantype[0] }},{{ scantype[1] }},{{ scantype[2] }},{{ scantype[3] }}">{{ scantype[1] }}</option>
-                {% endfor %}
-        </select>
-    </p>
     <h2>Host List</h2>
     <div class="grid_commandlist">
         {% for command in commands %}
-        <a class="item1" href="{{ url_for('index') }}" role="button">
+        <input id="cmd" type="text" value="{{ command[2] }}" hidden>
+        <label class="item1" onclick="showDetail()" role="button" value="{{ command[2] }}">
             {{ command[2] }}
-        </a>
+        </label>
         {% endfor %}
+    </div>
+    <div id="detail"></div>
+    <div>
+        <P>
+            <strong><font size="3">Target: </font></strong>
+            <select id="hosts" class="bg-dark border-dark text-white">
+                {% if ip != "" %}
+                    <option value={{ ip }}>{{ ip }}</option>
+                {% else %}
+                    <option disabled selected>Select Target</option>
+                {% endif %}
+                    <optgroup label="Other Hosts">
+                        {% for host in hosts %}
+                        <option value="{{ host[0] }}">{{ host[0] }}</option>
+                        {% endfor %}
+                    </optgroup>
+            </select>
+            <strong><font size="3">Scan Profile: </font></strong>
+            <select id="scanOption" class="bg-dark border-dark text-white">
+                <option disabled selected value="0">Choice Scan Profile</option>
+                <optgroup label="Nmap Scan">
+                    {% for scantype in commands %}
+                        <option value="{{ scantype[0] }},{{ scantype[1] }},{{ scantype[2] }},{{ scantype[3] }}">{{ scantype[1] }}</option>
+                    {% endfor %}
+            </select>
+        </p>
     </div>
 <hr>
     <!--<div class="container">
@@ -86,7 +90,7 @@
             </tbody>
         </table>
     </div>-->
-    <hr>
+<hr>
     <h5>Command:</h5>
     <input type="text" id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; height:3em; width:90%;" placeholder="Your Command of choice" value=""><br><br>
     <div class="form">
@@ -113,6 +117,12 @@
 {% block foot %}
 
 <script>
+    function showDetail(){
+        detail = document.getElementById("detail");
+        text = document.getElementById("cmd");
+        detailText = text.value;
+        detail.innerText = detailText;
+    }
     function copyToClipboard() {
         var copyText = document.getElementById("copyCommand");
         copyText.select();
