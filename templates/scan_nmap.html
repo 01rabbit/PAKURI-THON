@@ -12,16 +12,6 @@
                 }
         });
 
-        $("#detail-table").DataTable({
-            scrollX: false,
-            //scrollY: 300,
-            lengthChange: false,
-            pagingType: "numbers",
-            //searching: false,
-            displayLength: 10,
-            paging: false,
-            info: false
-        });
         });
     </script>
 {% endblock %}
@@ -34,20 +24,10 @@
     <hr>
     <h2>Scanning -Nmap-</h2>
     <h3>Recipe</h3>
-    <h2>Host List</h2>
-    <div class="grid_commandlist">
-        {% for command in commands %}
-        <input id="cmd" type="text" value="{{ command[2] }}" hidden>
-        <label class="item1" onclick="showDetail()" role="button" value="{{ command[2] }}">
-            {{ command[2] }}
-        </label>
-        {% endfor %}
-    </div>
-    <div id="detail"></div>
     <div>
         <P>
             <strong><font size="3">Target: </font></strong>
-            <select id="hosts" class="bg-dark border-dark text-white">
+            <select id="hosts" class="bg-dark border-dark text-white" style="width:150px">
                 {% if ip != "" %}
                     <option value={{ ip }}>{{ ip }}</option>
                 {% else %}
@@ -59,40 +39,26 @@
                         {% endfor %}
                     </optgroup>
             </select>
+        </p>
+        <p>
             <strong><font size="3">Scan Profile: </font></strong>
-            <select id="scanOption" class="bg-dark border-dark text-white">
+            <select id="scanOption" class="bg-dark border-dark text-white" style="width:250px">
                 <option disabled selected value="0">Choice Scan Profile</option>
                 <optgroup label="Nmap Scan">
                     {% for scantype in commands %}
-                        <option value="{{ scantype[0] }},{{ scantype[1] }},{{ scantype[2] }},{{ scantype[3] }}">{{ scantype[1] }}</option>
+                        <option value="{{ scantype[0] }},{{ scantype[1] }},{{ scantype[2] }},{{ scantype[3] }},{{ scantype[5] }}">{{ scantype[2] }}</option>
                     {% endfor %}
             </select>
+            <br>
+            Information:<br>
+            <textarea id="detail" name="detail" class="bg-dark border-dark text-white" style="width:100%" wrap="soft"></textarea>
         </p>
     </div>
 <hr>
-    <!--<div class="container">
-        <table id="detail-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Discription</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for command in commands %}
-                <tr>
-                    <td>{{ command[0] }}</td>
-                    <td>{{ command[1] }}</td>
-                    <td>{{ command[4] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>-->
-<hr>
     <h5>Command:</h5>
-    <input type="text" id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; height:3em; width:90%;" placeholder="Your Command of choice" value=""><br><br>
+    <textarea id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; width:100%" rows="4" wrap="soft" placeholder="Your Command of choice" value=""></textarea>
+        <br>
+        <br>
     <div class="form">
         <table>
             <tr>
@@ -100,14 +66,17 @@
                     <form action="/scan_nmap" method="POST">
                         <input type="hidden" id="setFilename" name="setFilename" value="" />
                         <input type="text" id="setCommand" name="setCommand" value="" hidden />
-                        <button type="submit" id="sendCommand" class="ostype btn btn-primary"><i class='bx bx-task'></i><br>Task</button>
+                        <button type="submit" id="sendCommand" class="ostype btn btn-primary">
+                            <i class='bx bx-task'></i><br>Task</button>
                     </form>
                 </td>
                 <td>
-                    <button class="ostype btn btn-success" onclick="copyToClipboard()" ><i class='bx bx-copy-alt' ></i><br>Copy</button>
+                    <button class="ostype btn btn-success" onclick="copyToClipboard()" >
+                        <i class='bx bx-copy-alt' ></i><br>Copy</button>
                 </td>
                 <td>
-                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'"><i class='bx bx-terminal'></i><br>Terminal</button>
+                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'">
+                        <i class='bx bx-terminal'></i><br>Terminal</button>
                 </td>
             </tr>
         </table>
@@ -117,12 +86,6 @@
 {% block foot %}
 
 <script>
-    function showDetail(){
-        detail = document.getElementById("detail");
-        text = document.getElementById("cmd");
-        detailText = text.value;
-        detail.innerText = detailText;
-    }
     function copyToClipboard() {
         var copyText = document.getElementById("copyCommand");
         copyText.select();
@@ -139,8 +102,8 @@
         $('#scanOption').change(function(){
             var commandID = $(this).val().split(',')[0];
             var commandName = $('#scanOption').val().split(',')[1];
-            var commandValue = $('#scanOption').val().split(',')[2];
-            var scanType = $('#scanOption').val().split(',')[3];
+            var commandValue = $('#scanOption').val().split(',')[3];
+            var commandDetail = $('#scanOption').val().split(',')[4];
             var commandLabel = $('#scanOption option:selected').text();
             var IPaddr = $('#hosts').val();
             var dt = new Date();
@@ -151,6 +114,7 @@
             $('#setCommand').val(commandValue + " " + IPaddr + " -oA tmp/" + filename);
             $('#copyCommand').val(commandValue + " " + IPaddr + " -oA tmp/" + filename);
             $('#setFilename').val(filename);
+            $('#detail').val(commandDetail);
             var table = $('#detail-table').DataTable();
             table.search('').columns().search('').draw();
             table.column( 0 ).search( commandID ).draw();
