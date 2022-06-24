@@ -593,3 +593,27 @@ td.hidden-col {
 #scanOption {
     width: 30%;
 }
+
+
+/*QR reader*/
+
+.qrcode-text {
+    padding-right: 1.7em;
+    margin-right: 0
+}
+
+.qrcode-text-btn {
+    background: url(../images/qr_icon.svg) 100% 100% no-repeat;
+    height: 1.7em;
+    width: 1.7em;
+    margin-left: -2em;
+    cursor: pointer
+}
+
+.qrcode-text-btn>input[type=file] {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    opacity: 0
+}

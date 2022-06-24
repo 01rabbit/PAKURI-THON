@@ -287,6 +287,9 @@ def bot_replay():
     comm.ChatCommunication()
     return
 
+@app.route('/qr_reader')
+def qr_reader():
+    return render_template('qr_reader.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5555)
