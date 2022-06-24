@@ -1,7 +1,11 @@
-import pkr_Interface
+import qrcode
+import hashlib
 
-if __name__ == '__main__':
-    sql = """SELECT * FROM t_command_list WHERE cmd_type = %s;"""
-    db = pkr_Interface.db_controller()
-    result = db.get_SingleValue(sql, "nmap")
-    print(result)
+def create_qrcode(message,filename):
+    img =qrcode.make(message)
+    img.save(filename)
+
+cmd = "nmap -sn 127.0.0.1 -oA tmp/Ping_scan_127.0.0.1_20220623153338"
+hs = hashlib.md5(cmd.encode()).hexdigest()
+filename = f"static/images/qrcode/{hs}.png"
+create_qrcode(cmd,filename)

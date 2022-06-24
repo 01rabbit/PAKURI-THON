@@ -41,5 +41,7 @@ update = "*"
 werkzeug = "*"
 slackweb = "*"
 ipaddress = "*"
+qrcode = "*"
+pillow = "*"
 
 [dev-packages]

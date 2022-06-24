@@ -50,36 +50,21 @@
                     {% endfor %}
             </select>
             <br>
-            Information:<br>
+            <h5>Command:</h5>
+            <textarea id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; width:100%" rows="4" wrap="soft" placeholder="Your Command of choice" value=""></textarea>
+            <br>
+            <h5>Information:</h5>
             <textarea id="detail" name="detail" class="bg-dark border-dark text-white" style="width:100%" wrap="soft"></textarea>
         </p>
     </div>
-<hr>
-    <h5>Command:</h5>
-    <textarea id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; width:100%" rows="4" wrap="soft" placeholder="Your Command of choice" value=""></textarea>
-        <br>
-        <br>
     <div class="form">
-        <table>
-            <tr>
-                <td>
-                    <form action="/scan_nmap" method="POST">
-                        <input type="hidden" id="setFilename" name="setFilename" value="" />
-                        <input type="text" id="setCommand" name="setCommand" value="" hidden />
-                        <button type="submit" id="sendCommand" class="ostype btn btn-primary">
-                            <i class='bx bx-task'></i><br>Task</button>
-                    </form>
-                </td>
-                <td>
-                    <button class="ostype btn btn-success" onclick="copyToClipboard()" >
-                        <i class='bx bx-copy-alt' ></i><br>Copy</button>
-                </td>
-                <td>
-                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'">
-                        <i class='bx bx-terminal'></i><br>Terminal</button>
-                </td>
-            </tr>
-        </table>
+        <form action="/build_command" method="POST">
+            <input type="hidden" id="setFilename" name="setFilename" value="" />
+            <input type="text" id="setCommand" name="setCommand" value="" hidden />
+            <input type="hidden" id="setDetail" name="setDetail" value="" />
+            <button type="submit" id="sendCommand" class="ostype btn btn-primary">
+                <i class='bx bx-wrench' ></i><br>Build</button>
+        </form>
     </div>
     <hr>
 {% endblock %}
@@ -114,6 +99,7 @@
             $('#setCommand').val(commandValue + " " + IPaddr + " -oA tmp/" + filename);
             $('#copyCommand').val(commandValue + " " + IPaddr + " -oA tmp/" + filename);
             $('#setFilename').val(filename);
+            $('#setDetail').val(commandDetail);
             $('#detail').val(commandDetail);
             var table = $('#detail-table').DataTable();
             table.search('').columns().search('').draw();

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script>
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ url_for('static', filename='json/Japanese.json') }}"
+                }
+        });
+
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="pt-2">
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('index') }}'"><i class='bx bx-home'></i><br>Home</button>
+        <button class="ostype btn btn-success" onclick="location.href='{{ url_for('scan_menu') }}'"><i class='bx bx-arrow-back'></i><br>Back</button>
+    </div>
+    <hr>
+    <h2>Your Orders</h2>
+    <div>
+        <h5>Command:</h5>
+        <textarea id="copyCommand" name="copyCommand" class="bg-dark border-dark text-white" style="font-size:120%; width:100%" rows="4" wrap="soft" placeholder="Your Command of choice" value="" readonly>{{ command }}</textarea>
+        <h5>Information:</h5>
+        <P>{{ detail }}</p>
+        <h5>QRcode:</h5>
+        <p><img src="{{ qr_img }}" style="display: block; margin: auto;" style="display: block; margin: auto;" width="350" height="350" alt="QR code with commands"></p>
+    </div>
+    <div class="form">
+        <table>
+            <tr>
+                <td>
+                    <form action="/scan_nmap" method="POST">
+                        <input type="hidden" id="setFilename" name="setFilename" value="" />
+                        <input type="text" id="setCommand" name="setCommand" value="" hidden />
+                        <button type="submit" id="sendCommand" class="ostype btn btn-primary">
+                            <i class='bx bx-play-circle' ></i><br>Execute</button>
+                    </form>
+                </td>
+                <td>
+                    <button class="ostype btn btn-success" onclick="copyToClipboard()" >
+                        <i class='bx bx-copy-alt' ></i><br>Copy</button>
+                </td>
+                <td>
+                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'">
+                        <i class='bx bx-terminal'></i><br>Terminal</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+{% endblock %}
+
+{% block foot %}
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("copyCommand");
+        copyText.select();
+        document.execCommand("copy");
+    }
+</script>
+{% endblock %}

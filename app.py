@@ -1,6 +1,7 @@
-import datetime
 import os
 import subprocess
+import qrcode
+import hashlib
 from subprocess import PIPE
 import JobController as jobcon
 import Communicator as com
@@ -23,10 +24,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def get_timestamp():
-    return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-
 def get_ip_address():
     nx = [ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
           for iface in ni.interfaces() if ni.AF_INET in ni.ifaddresses(iface)]
@@ -47,6 +44,12 @@ def fileread(filename):
 def process_action(command):
     result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE)
     return(result.stdout.decode('utf-8').split('\n')[0])
+
+
+def create_qrcode(message,filename):
+    img =qrcode.make(message)
+    img.save(filename)
+
 
 @app.route('/' , methods=['GET'])
 def index():
@@ -120,6 +123,16 @@ def scan_nikto():
         if request.args.get('setip') == 'Set':
             return redirect(url_for('scan', ip=ip))
         return render_template('scan_nikto.html', hosts=hosts, scan_nikto=nikto_list, commands=nikto_list, ip=ip, myip=myip)
+
+@app.route('/build_command', methods=['POST'])
+def build_command():
+    command = request.form.get('setCommand')
+    filename = request.form.get('setFilename')
+    detail = request.form.get('setDetail')
+    hs = hashlib.md5(command.encode()).hexdigest()
+    qr_img = f"static/images/qrcode/{hs}.png"
+    create_qrcode(command,qr_img)
+    return render_template('build_command.html', command=command,filename=filename,detail=detail,qr_img=qr_img)
 
 @app.route('/hostlist', methods=['GET'])
 def hostlist():
@@ -205,7 +218,7 @@ def terminal():
     myip = get_ip_address()
     cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
     console_flg = process_action(cmd)
-    params = config(CONFIG_FILE,WEBSSH)
+    params = config.webssh_conf()
     return render_template('terminal.html', myip=myip, console_flg=console_flg,username=params['username'],password=params['password'])
 
 @app.route('/task')
