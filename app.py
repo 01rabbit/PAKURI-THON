@@ -77,10 +77,10 @@ def fileimport():
             return redirect(url_for('index'))
     return render_template('import.html')
 
-@app.route('/scan_menu', methods=['GET'])
-def scan_menu():
+@app.route('/recon_menu', methods=['GET'])
+def recon_menu():
     ip = request.args.get('ip', '')
-    return render_template('scan_menu.html', ip=ip)
+    return render_template('recon_menu.html', ip=ip)
 
 
 @app.route('/scan_nmap', methods=['GET','POST'])

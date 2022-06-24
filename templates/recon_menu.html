@@ -6,8 +6,8 @@
         <button class="ostype btn btn-success" onclick="location.href='{{ url_for('hostlist') }}'"><i class='bx bx-target-lock' ></i><br>Target</button>
     </div>
     <hr>
-    <h2>Scanning -Menu-</h2>
-    <form action="{{ url_for('scan_menu', ip=ip ) }}" method="get">
+    <h2>Reconnaissance -Menu-</h2>
+    <form action="{{ url_for('recon_menu', ip=ip ) }}" method="get">
         {% if ip != "" %}
             <sapn class="scan-label">Target : <input type="text" name="ip" class="bg-dark border-dark text-white" value= {{ ip }} ></input></sapn>
         {% else %}
@@ -20,15 +20,19 @@
         <div class="grid_hostlist">
             <a class="item1" href="{{ url_for('scan_nmap', ip=ip) }}" role="button">
                 <img src="{{ url_for('static',filename='images/nmap-logo.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
-                <h3 style="text-align:center">Nmap</h3>
+                <h4 style="text-align:center">Nmap</h4>
             </a>
             <a class="item1" href="{{ url_for('scan_nikto', ip=ip) }}" role="button">
                 <img src="{{ url_for('static',filename='images/nikto-logo.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
-                <h3 style="text-align:center">Nikto</h3>
+                <h4 style="text-align:center">Nikto</h4>
+            </a>
+            <a class="item1" href="{{ url_for('scan_nmap', ip=ip) }}" role="button">
+                <img src="{{ url_for('static',filename='images/autorecon.png') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+                <h4 style="text-align:center">AutoRecon</h4>
             </a>
             <a class="item1" href="{{ url_for('terminal') }}" role="button">
                 <img src="{{ url_for('static',filename='images/cmd.png') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
-                <h3 style="text-align:center">Terminal</h3>
+                <h4 style="text-align:center">Terminal</h4>
             </a>
         </div>
     </div>
