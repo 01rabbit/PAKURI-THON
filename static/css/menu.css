@@ -111,43 +111,49 @@ body {
 .one {
     transform: translate(5px, -100px);
     /*上角*/
+    /*Home*/
 }
 
 .two {
     /* transform: translate(120px, 80px); */
     /*右下角*/
+    /*Tasks*/
     transform: translateX(-155px);
 }
 
 .three {
     /* transform: translate(120px, -80px); */
     /*右上角*/
+    /*Tools*/
     transform: translateX(-315px);
 }
 
 .four {
     /* transform: translateY(155px); */
     /*下角*/
+    /*Message*/
     transform: translate(-235px, -50px);
 }
 
 .five {
     /* transform: translate(-75px, 55px); */
     /*左下角*/
+    /*Target*/
     transform: translate(-155px, -100px);
 }
 
 .six {
     transform: translate(-75px, -50px);
     /*左上角*/
+    /*Docker*/
 }
 
 .seven {
     transform: translate(-75px, -150px);
-    /*Docker*/
+    /*Terminal*/
 }
 
 .eight {
     transform: translate(5px, -200px);
-    /*Terminal*/
+    /*QR Reader*/
 }

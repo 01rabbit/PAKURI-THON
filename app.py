@@ -1,3 +1,4 @@
+from crypt import methods
 import os
 import subprocess
 import qrcode
@@ -287,9 +288,16 @@ def bot_replay():
     comm.ChatCommunication()
     return
 
-@app.route('/qr_reader')
+@app.route('/qr_reader', methods=['POST','GET'])
 def qr_reader():
-    return render_template('qr_reader.html')
+    db = pkr.db_controller()
+    jc = jobcon.JobController()
+    if request.method == 'POST':
+        command = request.form.get('setCommand')
+        # jc.Set_myjob(command, COMMANDER, "")
+        return redirect(url_for('recon_menu'))
+    else:
+        return render_template('qr_reader.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5555)

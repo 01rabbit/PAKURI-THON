@@ -598,22 +598,29 @@ td.hidden-col {
 /*QR reader*/
 
 .qrcode-text {
-    padding-right: 1.7em;
+    width: 95%;
+    height: 150px;
+    margin: 1em 0;
+    padding: 1em;
+    font-size: 1.3em;
+    padding-right: 3.7em;
     margin-right: 0
 }
 
 .qrcode-text-btn {
-    background: url(../images/qr_icon.svg) 100% 100% no-repeat;
-    height: 1.7em;
-    width: 1.7em;
-    margin-left: -2em;
+    display: inline-block;
+    background: url(../images/qr_icon.svg) no-repeat;
+    background-color: #917c50;
+    background-size: contain;
+    height: 100px;
+    width: 100px;
+    margin-left: -6.5em;
+    height: -1em;
     cursor: pointer
 }
 
 .qrcode-text-btn>input[type=file] {
-    position: absolute;
-    overflow: hidden;
-    width: 1px;
-    height: 1px;
+    width: 10px;
+    height: 10px;
     opacity: 0
 }

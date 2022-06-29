@@ -103,7 +103,14 @@
                     </ul>
                 </li>
                 <li>
-
+                    <a href="{{ url_for('qr_reader') }}">
+                        <i class='bx bx-qr-scan' ></i>
+                        <span class="link_name">QR Reader</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="{{ url_for('qr_reader') }}">QR Reader</a></li>
+                    </ul>
+                </li>
                 <div class="profile-details">
                     <div class="profile-content">
                     <!--<img src="images/profile.jpg" alt="profileImg">-->
@@ -164,6 +171,9 @@
         </div>
         <div class="item">
             <a href="{{ url_for('terminal') }}"><i class='bx bx-terminal'></i></a>
+        </div>
+        <div class="item">
+            <a href="{{ url_for('qr_reader') }}"><i class='bx bx-qr-scan' ></i></a>
         </div>
     </div>
     <script src="{{ url_for('static',filename='js/menu.js') }}"></script>

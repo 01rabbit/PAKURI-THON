@@ -5,12 +5,34 @@
 {% endblock %}
 
 {% block content %}
-    <textarea size=16 placeholder="Tracking Code" class=qrcode-text ></textarea>
+<h2>QR Code Reader</h2>
+<div class "container">
+    <textarea size=16 placeholder="Tracking Code" class=qrcode-text id="qrcode-text"></textarea>
     <label class=qrcode-text-btn>
-        <input type=file accept="image/*" capture=environment onclick="return showQRIntro();" onchange="openQRCamera(this);" tabindex=-1>
-    </label>
-    <input type=button value="Go" disabled>
+        <input type=file accept="image/*" capture=environment onchange="openQRCamera(this);" tabindex=-1>
+    </label> 
+    <br>
+    <hr>
+    <div class="form">
+        <table>
+            <tr>
+                <td>
+                    <form action="/qr_reader" method="POST">
+                        <input type="text" id="setCommand" name="setCommand" value="" hidden/>
+                        <button type="submit" id="sendCommand" class="ostype btn btn-primary">
+                            <i class='bx bx-play-circle' ></i><br>Execute</button>
+                    </form>
+                </td>
+                <td>
+                    <button class="ostype btn btn-success" onclick="location.href='{{ url_for('terminal') }}'">
+                        <i class='bx bx-terminal'></i><br>Terminal</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 
+    <input type=button value="Go" disabled>
+</div>
 
 {% endblock %}
 
@@ -26,6 +48,9 @@
                     alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
                 } else {
                     node.parentNode.previousElementSibling.value = res;
+                    let hoge = document.getElementById("qrcode-text");
+                    let obj = document.getElementsByName("setCommand")[0];
+                    obj.value = hoge.value;
                 }
             };
             qrcode.decode(reader.result);
