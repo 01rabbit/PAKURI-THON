@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "789bf9eaaf1d3658d774387cbfa748a170648340e39c2b0644038134aef0a0f4"
+            "sha256": "2eaf666372a409a20e06aa63df806ca07ee4b9de6e00dc4c2606ca1da32f0180"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -250,7 +250,7 @@
                 "sha256:fdcec0b8399108577ec290f55551d926d9a1fa6cad45882093a7a07ac5ec147b"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3' and (platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32'))))))",
+            "markers": "platform_python_implementation == 'CPython'",
             "version": "==1.1.2"
         },
         "idna": {
@@ -263,11 +263,11 @@
         },
         "importlib-metadata": {
             "hashes": [
-                "sha256:5d26852efe48c0a32b0509ffbc583fda1a2266545a78d104a6f4aff3db17d700",
-                "sha256:c58c8eb8a762858f49e18436ff552e83914778e50e9d2f1660535ffb364552ec"
+                "sha256:637245b8bab2b6502fcbc752cc4b7a6f6243bb02b31c5c26156ad103d3d45670",
+                "sha256:7401a975809ea1fdc658c3aa4f78cc2195a0e019c5cbc4c06122884e9ae80c23"
             ],
             "markers": "python_version < '3.10'",
-            "version": "==4.11.4"
+            "version": "==4.12.0"
         },
         "ipaddress": {
             "hashes": [
@@ -584,11 +584,11 @@
         },
         "requests": {
             "hashes": [
-                "sha256:bc7861137fbce630f17b03d3ad02ad0bf978c844f3536d0edda6499dafce2b6f",
-                "sha256:d568723a7ebd25875d8d1eaf5dfa068cd2fc8194b2e483d7b1f7c81918dbec6b"
+                "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983",
+                "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"
             ],
             "index": "pypi",
-            "version": "==2.28.0"
+            "version": "==2.28.1"
         },
         "scapy-python3": {
             "hashes": [
@@ -800,10 +800,10 @@
         },
         "webssh": {
             "hashes": [
-                "sha256:02ee8f13c8d89bc2e4129d01d72996fff664ae4715d016aec2e7d09ab1cb114e"
+                "sha256:caa8f06a18763044d70fcde07931ade6c50bfaf9b16eb6318f82adc13c5b0fde"
             ],
             "index": "pypi",
-            "version": "==1.5.3"
+            "version": "==1.6.0"
         },
         "werkzeug": {
             "hashes": [

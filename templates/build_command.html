@@ -33,8 +33,8 @@
             <tr>
                 <td>
                     <form action="/scan_nmap" method="POST">
-                        <input type="hidden" id="setFilename" name="setFilename" value="" />
-                        <input type="text" id="setCommand" name="setCommand" value="" hidden />
+                        <input type="text" id="setFilename" name="setFilename" value={{ filename }} hidden/>
+                        <textarea id="setCommand" name="setCommand" hidden>{{ command }}</textarea>
                         <button type="submit" id="sendCommand" class="ostype btn btn-primary">
                             <i class='bx bx-play-circle' ></i><br>Execute</button>
                     </form>

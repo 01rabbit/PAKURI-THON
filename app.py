@@ -217,7 +217,7 @@ def docker_mattermost():
 @app.route('/terminal')
 def terminal():
     myip = get_ip_address()
-    cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
+    cmd = "wssh --version|wc -l"
     console_flg = process_action(cmd)
     params = config.webssh_conf()
     return render_template('terminal.html', myip=myip, console_flg=console_flg,username=params['username'],password=params['password'])
