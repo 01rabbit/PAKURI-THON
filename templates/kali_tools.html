@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- <img class="top-images-l" src="{{ url_for('static', filename='images/pakuri3-banner.png') }}" alt="">
+    <img class="top-images-s" src="{{ url_for('static', filename='images/pakuri-logo.png') }}" alt=""> -->
+</div>
+<hr>
+<div class="container">
+    <h4>
+        <img src="{{ url_for('static',filename='images/kali-info-gathering-trans.svg') }}" width="64" height="64" alt="">
+        Information gathering
+    </h4>
+    <table>
+        <td>
+            <img src="{{ url_for('static',filename='images/nmap.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+        </td>
+        <td>
+            <div class="container">
+                <p>
+                    <h2>Nmap</h2>
+                    <h5>Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing.</h5>
+                </p>
+            </div>
+        </td>
+    </table>
+    <h4>
+        <img src="{{ url_for('static',filename='images/kali-vuln-assessment-trans.svg') }}" width="64" height="64" alt="">
+        Vulnerability Analysis
+    </h4>
+    <table>
+        <td>
+            <img src="{{ url_for('static',filename='images/nikto.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+        </td>
+        <td>
+            <div class="container">
+                <p>
+                    <h2>nikto</h2>
+                    <h5>Nikto is a pluggable web server and CGI scanner written in Perl, using rfp’s LibWhisker to perform fast security or informational checks.</h5>
+                </p>
+            </div>
+        </td>
+    </table>
+    <h4>
+        <img src="{{ url_for('static',filename='images/kali-web-application-trans.svg') }}" width="64" height="64" alt="">
+        Web Application Analysis
+    </h4>
+    <table>
+        <td>
+            <img src="{{ url_for('static',filename='images/nmap.svg') }}" style="display: block; margin: auto;" width="128" height="128" alt="">
+        </td>
+        <td>
+            <div class="container">
+                <p>
+                    <h2>Nmap</h2>
+                    <h5>Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing.</h5>
+                </p>
+            </div>
+        </td>
+    </table>
+</div>
+
+<hr>
+
+{% endblock %}

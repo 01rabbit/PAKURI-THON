@@ -299,5 +299,9 @@ def qr_reader():
     else:
         return render_template('qr_reader.html')
 
+@app.route('/kali_tools', methods=['POST','GET'])
+def kali_tools():
+    return render_template('kali_tools.html')
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5555)
