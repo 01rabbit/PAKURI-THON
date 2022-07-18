@@ -43,15 +43,15 @@ if systemctl status docker.service | grep "active (running)" > /dev/null; then
         echo "Start SSH Servece. Restart this script."
         exit 1
     fi
-    printf "Checking for WebSSH..."
-    if docker-compose -f docker/webssh/docker-compose.yml ps | grep Up > /dev/null; then
-        printf "${GREEN_b}OK${NC}\n"
-    else
-        printf "${RED_b}Failed${NC}\n"
-        docker-compose -f docker/webssh/docker-compose.yml start
-        echo "Start WebSSH. Restart this script."
-        exit 1
-    fi
+    # printf "Checking for WebSSH..."
+    # if docker-compose -f docker/webssh/docker-compose.yml ps | grep Up > /dev/null; then
+    #     printf "${GREEN_b}OK${NC}\n"
+    # else
+    #     printf "${RED_b}Failed${NC}\n"
+    #     docker-compose -f docker/webssh/docker-compose.yml start
+    #     echo "Start WebSSH. Restart this script."
+    #     exit 1
+    # fi
     printf "Checking for postgres..."
     if docker-compose -f docker/postgres/docker-compose.yml ps | grep Up > /dev/null; then
         printf "${GREEN_b}OK${NC}\n"
@@ -106,6 +106,17 @@ if [ -z ${TMUX} ];then
     tmux send-keys -t "pakuri_session:main.1" "python watchDog.py" C-m
     printf ">"
     sleep 1
+    #wssh
+    tmux new-window -n "webssh"
+    printf ">"
+    sleep 1
+    tmux send-keys -t "webssh" "wssh" C-m
+    printf ">"
+    sleep 1
+    tmux select-window -t "main"
+    printf ">"
+    sleep 1
+
     # iniファイルの読み込み
     declare -r INI_FILE="config.ini"
     # sectionの指定

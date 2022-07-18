@@ -187,19 +187,6 @@ def docker():
     mattermost_flg = process_action(cmd)
     return render_template('docker.html',webssh=webssh_flg,mattermost=mattermost_flg)
 
-@app.route('/docker/webssh')
-def docker_webssh():
-    cmd = "docker-compose -f docker/webssh/docker-compose.yml ps|grep Up|wc -l"
-    flg = process_action(cmd)
-    # 1: Up, 0: Down
-    if flg == "1":
-        cmd = "docker-compose -f docker/webssh/docker-compose.yml stop"
-        process_action(cmd)
-    else:
-        cmd = "docker-compose -f docker/webssh/docker-compose.yml start"
-        process_action(cmd)
-    return redirect(url_for('docker'))
-
 @app.route('/docker/mattermost')
 def docker_mattermost():
     cmd = "docker-compose -f docker/mattermost-docker/docker-compose.yml ps|grep Up|wc -l"

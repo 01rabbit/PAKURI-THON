@@ -8,7 +8,7 @@
     <hr>
     {% if console_flg == "1" %}
         <h2>Terminal</h2>
-        <iframe id="iframe-console" src="http://127.0.0.1:8888/?hostname={{ myip }}&username={{ username }}&password={{ password }}&command=clear&&{{ command }}" ></iframe>
+        <iframe id="iframe-console" src="http://{{ myip }}:8888/?hostname={{ myip }}&username={{ username }}&password={{ password }}&command=clear&&{{ command }}" ></iframe>
     {% else %}
         <h2><i class="bx bx-error"></i> Terminal is not running</h2>
         <p>Please run <code>sudo docker-compose up -d</code> to start terminal</p>
