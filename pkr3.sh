@@ -43,15 +43,15 @@ if systemctl status docker.service | grep "active (running)" > /dev/null; then
         echo "Start SSH Servece. Restart this script."
         exit 1
     fi
-    printf "Checking for WebSSH..."
-    if docker-compose -f docker/webssh/docker-compose.yml ps | grep Up > /dev/null; then
-        printf "${GREEN_b}OK${NC}\n"
-    else
-        printf "${RED_b}Failed${NC}\n"
-        docker-compose -f docker/webssh/docker-compose.yml start
-        echo "Start WebSSH. Restart this script."
-        exit 1
-    fi
+    # printf "Checking for WebSSH..."
+    # if docker-compose -f docker/webssh/docker-compose.yml ps | grep Up > /dev/null; then
+    #     printf "${GREEN_b}OK${NC}\n"
+    # else
+    #     printf "${RED_b}Failed${NC}\n"
+    #     docker-compose -f docker/webssh/docker-compose.yml start
+    #     echo "Start WebSSH. Restart this script."
+    #     exit 1
+    # fi
     printf "Checking for postgres..."
     if docker-compose -f docker/postgres/docker-compose.yml ps | grep Up > /dev/null; then
         printf "${GREEN_b}OK${NC}\n"
